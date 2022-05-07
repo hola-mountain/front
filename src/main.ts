@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { Quasar } from "quasar";
 
+import "@/assets/css/reset.sass";
 import "@quasar/extras/material-icons/material-icons.css";
 import "quasar/src/css/index.sass";
 import "@/assets/css/style.sass";
