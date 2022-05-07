@@ -10,7 +10,7 @@
           <img
             src="@/assets/images/hiker.jpg"
             alt=""
-            width="80%"
+            width="100%"
             style="border-radius: 50%"
           />
         </div>
