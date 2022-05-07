@@ -1,7 +1,7 @@
 <template>
   <header class="row justify-around items-center" style="height: 100px">
     <img src="@/assets/images/logo.png" alt="" style="width: 120px" />
-    <q-btn round icon="person" @click="openSigninDialog" />
+    <q-btn round icon="person" @click="openLoginDialog" />
   </header>
   <main>
     <section class="q-my-xl">
@@ -26,14 +26,14 @@
     <img src="@/assets/images/logo.png" alt="" style="width: 200px" />
     <p class="text-h5 text-weight-bold">Contact Us.</p>
   </footer>
-  <SignInUpDialog ref="signinDialog" />
+  <LoginDialog ref="loginDialog" />
 </template>
 <script lang="ts">
 import KoreaMap from "./partial/KoreaMap.vue";
 import IntroduceService from "./partial/IntroduceService.vue";
 import BadgesService from "./partial/BadgesService.vue";
 import ReviewService from "./partial/ReviewService.vue";
-import SignInUpDialog from "@/components/SignInUpDialog.vue";
+import LoginDialog from "@/components/login/LoginDialog.vue";
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
@@ -43,17 +43,17 @@ export default defineComponent({
     IntroduceService,
     BadgesService,
     ReviewService,
-    SignInUpDialog,
+    LoginDialog,
   },
   setup() {
-    const signinDialog = ref();
-    const openSigninDialog = () => {
-      signinDialog.value.openDialog();
+    const loginDialog = ref();
+    const openLoginDialog = () => {
+      loginDialog.value.openDialog();
     };
 
     return {
-      signinDialog,
-      openSigninDialog,
+      loginDialog,
+      openLoginDialog,
     };
   },
 });
