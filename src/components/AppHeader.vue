@@ -1,6 +1,6 @@
 <template>
-  <header class="row justify-around items-center" style="height: 100px">
-    <img src="@/assets/images/logo.png" alt="" style="width: 120px" />
+  <header class="row justify-around items-center">
+    <img src="@/assets/images/logo.png" alt="" class="logo" />
     <q-btn round icon="person" @click="openLoginDialog" />
   </header>
   <LoginDialog ref="loginDialog" />

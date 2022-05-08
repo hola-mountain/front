@@ -1,22 +1,16 @@
 <template>
-  <section>
-    <div style="overflow: hidden">
-      <img src="@/assets/images/bottom-mt.svg" alt="" />
-      <div
-        style="background-color: #1c492e"
-        class="row justify-center items-center"
-      >
-        <div class="q-my-xl text-center">
-          <img
-            src="@/assets/images/hiker.jpg"
-            alt=""
-            width="100%"
-            style="border-radius: 50%"
-          />
+  <section class="introduce">
+    <div class="over-hidden">
+      <img src="@/assets/images/bottom-mt.svg" alt="" class="top-svg" />
+      <div class="row justify-center items-center content">
+        <div class="q-my-xl q-pa-xl text-center">
+          <img src="@/assets/images/hiker.jpg" alt="" />
         </div>
-        <div class="text-brown-1" style="max-width: 500px"></div>
+        <div class="text-brown-1">
+          설명문구설명문구설명문구설명문구설명문구설명문구
+        </div>
       </div>
-      <img src="@/assets/images/wave.svg" alt="" />
+      <img src="@/assets/images/wave-intro.svg" alt="" class="bottom-svg" />
     </div>
   </section>
 </template>

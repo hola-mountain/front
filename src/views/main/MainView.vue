@@ -1,17 +1,17 @@
 <template>
   <main>
-    <section class="q-my-xl">
-      <div class="row justify-center">
-        <div class="column flex-center">
-          <p class="text-weight-bolder text-subtitle2 text-center">
+    <section class="q-mt-xl">
+      <div class="row justify-center q-mb-xl">
+        <div class="column flex-center q-pa-lg">
+          <h4 class="text-weight-bolder text-center q-mb-sm">
             대한민국 등산 정보의 모든것!
-          </p>
+          </h4>
           <h1 class="text-weight-bolder">Holam</h1>
         </div>
         <KoreaMap />
       </div>
-      <div class="q-mt-xl text-center">
-        <p>Holam 더 알아보기</p>
+      <div class="q-pt-md text-center">
+        <p class="text-weight-bold">Holam 더 알아보기</p>
         <q-icon name="expand_more" size="30px" />
       </div>
     </section>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="q-pa-lg">
     <svg
       height="400"
       version="1.1"
@@ -132,9 +132,7 @@
       ></path>
     </svg>
     <div>
-      <p class="text-weight-bolder text-subtitle2 text-center">
-        지도에 마우스를 대보세요!
-      </p>
+      <p class="text-weight-bolder text-center">지도에 마우스를 대보세요!</p>
     </div>
   </div>
 </template>

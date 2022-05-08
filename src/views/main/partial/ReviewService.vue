@@ -1,6 +1,7 @@
 <template>
-  <section class="q-my-xl">
-    <div class="row justify-center q-gutter-md">
+  <section class="q-pa-xl review">
+    <h4 class="text-center q-mt-lg">Review</h4>
+    <div class="row justify-center q-pa-xl">
       <q-card class="my-card q-ma-md" v-for="item in 4" :key="item">
         <img src="https://cdn.quasar.dev/img/mountains.jpg" />
 

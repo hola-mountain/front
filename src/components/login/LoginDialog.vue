@@ -3,6 +3,7 @@
     v-model="isOpen"
     transition-show="rotate"
     transition-hide="rotate"
+    class="login-dialog"
     @hide="reset"
   >
     <SignIn v-if="isSigninMode" @view-singup="isSigninMode = false" />

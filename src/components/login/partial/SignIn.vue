@@ -1,6 +1,7 @@
 <template>
   <q-card class="q-pa-lg">
     <q-card-section class="text-center">
+      <q-btn icon="close" flat round dense v-close-popup class="close-btn" />
       <q-avatar
         size="80px"
         font-size="50px"
@@ -12,7 +13,7 @@
     </q-card-section>
 
     <q-card-section class="q-pt-none">
-      <div class="q-pa-md" style="width: 350px">
+      <div class="q-pa-md">
         <q-input
           outlined
           v-model="id"
