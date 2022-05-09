@@ -9,6 +9,16 @@ const router = createRouter({
       name: "home",
       component: MainView,
     },
+    {
+      path: "/mountains/:cityId?",
+      name: "MountainsView",
+      component: () => import("../views/mt/list/MountainsView.vue"),
+    },
+    {
+      path: "/mountains/detail/:mtId",
+      name: "MountainDetailView",
+      component: () => import("../views/mt/detail/MountainDetailView.vue"),
+    },
   ],
 });
 

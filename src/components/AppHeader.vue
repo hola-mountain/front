@@ -1,6 +1,11 @@
 <template>
   <header class="row justify-around items-center">
-    <img src="@/assets/images/logo.png" alt="" class="logo" />
+    <img
+      src="@/assets/images/logo.png"
+      alt=""
+      class="logo"
+      @click="$router.push('/')"
+    />
     <q-btn round icon="person" @click="openLoginDialog" />
   </header>
   <LoginDialog ref="loginDialog" />
