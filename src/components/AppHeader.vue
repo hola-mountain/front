@@ -1,19 +1,22 @@
 <template>
   <header class="row justify-around items-center">
-    <div class="row justify-start items-center">
-      <img
-        src="@/assets/images/logo.png"
-        alt=""
-        class="logo"
-        @click="$router.push('/')"
-      />
-      <span
-        class="text-subtitle1 text-weight-bold q-ml-md cursor-pointer"
-        @click="$router.push(`/profile/1`)"
-        >마이페이지 - 임시</span
-      >
+    <img
+      src="@/assets/images/logo.png"
+      alt=""
+      class="logo"
+      @click="$router.push('/')"
+    />
+    <div>
+      <q-btn glossy class="q-mx-md" @click="$router.push('/mountains/00')">
+        <q-icon left size="35px" name="map" />
+        <div class="text-bold">목록</div>
+      </q-btn>
+      <q-btn glossy class="q-mx-md" @click="$router.push(`/profile/1`)">
+        <q-icon left size="35px" name="person" />
+        <div class="text-bold">마이페이지(임시)</div>
+      </q-btn>
+      <q-btn glossy round icon="person" @click="openLoginDialog" />
     </div>
-    <q-btn round icon="person" @click="openLoginDialog" />
   </header>
   <LoginDialog ref="loginDialog" />
 </template>
