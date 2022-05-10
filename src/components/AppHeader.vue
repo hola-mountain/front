@@ -8,8 +8,8 @@
     />
     <div>
       <q-btn glossy class="q-mx-md" @click="$router.push('/mountains/00')">
-        <q-icon left size="35px" name="map" />
-        <div class="text-bold">목록</div>
+        <q-icon left size="35px" name="landscape" />
+        <div class="text-bold">전국 산 정보</div>
       </q-btn>
       <q-btn glossy class="q-mx-md" @click="$router.push(`/profile/1`)">
         <q-icon left size="35px" name="person" />

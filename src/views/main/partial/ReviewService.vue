@@ -15,6 +15,12 @@
         <q-card-section class="q-pt-none"> safasfsafsaf </q-card-section>
       </q-card>
     </div>
+    <div class="text-center q-ma-xl">
+      <q-btn push color="brown-6" @click="$router.push('/mountains/00')">
+        <q-icon left size="3em" name="landscape" />
+        <div class="text-bold">전국 산 정보 보러가기</div>
+      </q-btn>
+    </div>
   </section>
 </template>
 <script setup lang="ts">
