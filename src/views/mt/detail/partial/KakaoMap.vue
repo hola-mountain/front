@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="q-ma-xl">
     <div id="map" class="rounded-borders"></div>
     <!-- <div class="button-group">
       <button @click="changeSize(0)">Hide</button>

@@ -19,6 +19,11 @@ const router = createRouter({
       name: "MountainDetailView",
       component: () => import("../views/mt/detail/MountainDetailView.vue"),
     },
+    {
+      path: "/profile/:id",
+      name: "ProfileView",
+      component: () => import("../views/profile/ProfileView.vue"),
+    },
   ],
 });
 

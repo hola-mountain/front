@@ -8,6 +8,7 @@
     icon="keyboard_arrow_up"
     class="top-btn"
     @click="scrollUp"
+    glossy
   />
 </template>
 <script setup lang="ts">

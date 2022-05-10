@@ -1,11 +1,18 @@
 <template>
   <header class="row justify-around items-center">
-    <img
-      src="@/assets/images/logo.png"
-      alt=""
-      class="logo"
-      @click="$router.push('/')"
-    />
+    <div class="row justify-start items-center">
+      <img
+        src="@/assets/images/logo.png"
+        alt=""
+        class="logo"
+        @click="$router.push('/')"
+      />
+      <span
+        class="text-subtitle1 text-weight-bold q-ml-md cursor-pointer"
+        @click="$router.push(`/profile/1`)"
+        >마이페이지 - 임시</span
+      >
+    </div>
     <q-btn round icon="person" @click="openLoginDialog" />
   </header>
   <LoginDialog ref="loginDialog" />

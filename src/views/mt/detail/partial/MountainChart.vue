@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 400px">
+  <div style="width: 400px" class="q-ma-xl">
     <PolarAreaChart v-bind="polarAreaChartProps" />
   </div>
 </template>
