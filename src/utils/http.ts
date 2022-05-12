@@ -1,4 +1,5 @@
 import Axios from "axios";
+import { errorAlert } from "./common";
 const instance = Axios.create();
 
 instance.interceptors.request.use(
@@ -15,11 +16,12 @@ instance.interceptors.response.use(
     return response;
   },
   function (error) {
+    errorAlert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
     return Promise.reject(error);
   }
 );
 
-const baseUrl = "http://15.165.192.190:30";
+const baseUrl = "http://15.165.192.190:8080";
 // const baseUrl = import.meta.env.VITE_BASE_API_URL;
 const defaultHeaders = {
   "Content-Type": "application/json;charset=UTF-8",

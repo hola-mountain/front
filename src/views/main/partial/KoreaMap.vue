@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-lg">
+  <div class="overflow-hidden">
     <svg
       height="400"
       version="1.1"

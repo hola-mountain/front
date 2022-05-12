@@ -6,15 +6,16 @@ export const signin = async () => {
   try {
     const result = http.get("/users/login");
   } catch (e) {
-    errorAlert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    // errorAlert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
   }
 };
 export const signup = async (params: SignupForm) => {
   try {
-    const result = http.post("/users/join", params);
+    const result = await http.post("/users/join", params);
     return result;
   } catch (e) {
-    errorAlert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    console.log("gdgd");
+    // errorAlert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
   }
 };
 
