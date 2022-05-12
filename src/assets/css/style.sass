@@ -75,6 +75,44 @@ header
 .mountains
   img
     max-width: 100%
+  .search-box
+    width: 70%
+    margin: 0 auto
+    .item
+      min-width: 200px
+      width: 300px
+  .list-box
+    width: 80%
+    margin: 0 auto
+    .item
+      width: 20%
+
+  @media (max-width: 1529px)
+    .list-box
+      width: 100%
+      .item
+        width: 30%
+
+  @media (max-width: 530px)
+    margin: 0
+    padding: 0
+    .search-box
+      width: 100%
+
+.mt-detail
+  .basic
+    width: 80%
+    margin: 45px auto
+    .mt-img
+      width: 30%
+    .mt-info
+      width: 50%
+  @media (max-width: 1510px)
+    .basic
+      .mt-img
+        width: 80%
+      .mt-info
+        width: 80%
 
 .v-enter-active,
 .v-leave-active

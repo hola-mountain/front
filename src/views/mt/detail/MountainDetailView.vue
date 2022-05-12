@@ -1,7 +1,7 @@
 <template>
-  <section>
-    <div class="flex justify-center q-ma-xl">
-      <div class="q-pa-md" style="width: 400px">
+  <section class="mt-detail">
+    <div class="flex justify-center basic">
+      <div class="q-pa-md mt-img">
         <q-carousel
           animated
           v-model="slide"
@@ -28,7 +28,7 @@
           />
         </q-carousel>
       </div>
-      <div class="q-pa-md">
+      <div class="q-pa-md .mt-info">
         <h5>산 이름</h5>
         <p>한라산</p>
         <h5>산 높이</h5>
