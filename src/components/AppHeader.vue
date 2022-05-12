@@ -11,7 +11,7 @@
         <q-icon left size="35px" name="landscape" />
         <div class="text-bold">전국 산 정보</div>
       </q-btn>
-      <q-btn glossy class="q-mx-md" @click="$router.push(`/profile/1`)">
+      <q-btn glossy class="q-mx-md" @click="$router.push(`/mypage/profile/1`)">
         <q-icon left size="35px" name="person" />
         <div class="text-bold">마이페이지(임시)</div>
       </q-btn>

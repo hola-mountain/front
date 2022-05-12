@@ -27,9 +27,20 @@ const router = createRouter({
       component: () => import("../views/mt/detail/MountainDetailView.vue"),
     },
     {
-      path: "/profile/:id",
-      name: "ProfileView",
-      component: () => import("../views/profile/ProfileView.vue"),
+      path: "/mypage",
+      component: () => import("../views/mypage/MyPage.vue"),
+      children: [
+        {
+          path: "/mypage/profile/:id",
+          name: "ProfileView",
+          component: () => import("../views/mypage/profile/ProfileView.vue"),
+        },
+        {
+          path: "/mypage/favorit/:id",
+          name: "FavoritMountain",
+          component: () => import("../views/mypage/favorit/FavoritMountain.vue"),
+        },
+      ],
     },
   ],
 });
