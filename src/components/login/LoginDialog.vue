@@ -6,8 +6,10 @@
     class="login-dialog"
     @hide="reset"
   >
-    <SignIn v-if="isSigninMode" @view-singup="isSigninMode = false" />
-    <SignUp v-else @view-singin="isSigninMode = true" />
+    <div class="container">
+      <SignIn v-if="isSigninMode" @view-singup="isSigninMode = false" />
+      <SignUp v-else @view-singin="isSigninMode = true" />
+    </div>
   </q-dialog>
 </template>
 <script lang="ts">
