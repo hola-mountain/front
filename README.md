@@ -16,4 +16,4 @@
 - Git
 
 ## 프로토타입
-[카카오 오븐을 활용한 프로토타입](https://ovenapp.io/view/mVyNHivUTx5M0n7dOR2q59s3rk5NFNAu#wjImm){:target="_blank"}
+<a href="https://ovenapp.io/view/mVyNHivUTx5M0n7dOR2q59s3rk5NFNAu#wjImm" target="_blank">카카오 오븐을 활용한 프로토타입</a>
