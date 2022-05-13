@@ -1,21 +1,26 @@
-import { errorAlert } from "../utils/common";
-import type { SignupForm } from "../utils/typeInterface";
+import type {
+  SigninForm,
+  SigninResponce,
+  SignupForm,
+} from "../utils/typeInterface";
 import http from "../utils/http";
 
-export const signin = async () => {
+export const signin = async (params: SigninForm) => {
   try {
-    const result = http.get("/users/login");
+    const result = http.post("/users/login", params);
+    return result;
   } catch (e) {
-    // errorAlert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    console.log(e);
   }
 };
-export const signup = async (params: SignupForm) => {
+export const signup = async (
+  params: SignupForm
+): Promise<SigninResponce | undefined> => {
   try {
     const result = await http.post("/users/join", params);
     return result;
   } catch (e) {
-    console.log("gdgd");
-    // errorAlert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    console.log(e);
   }
 };
 

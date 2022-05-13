@@ -16,18 +16,19 @@
       <div class="q-pa-md">
         <q-input
           outlined
-          v-model="id"
-          label="이메일"
+          v-model="loginForm.nickName"
+          label="닉네임"
           class="q-mb-md"
           color="green-10"
         />
         <q-input
-          v-model="password"
+          v-model="loginForm.password"
           outlined
           type="password"
           label="비밀번호"
           class="q-mb-md"
           color="green-10"
+          @keypress.enter="doSignin"
         />
         <q-checkbox
           v-model="saveInfo"
@@ -40,6 +41,7 @@
           label="로그인"
           style="width: 100%"
           class="q-mb-md"
+          @click="doSignin"
         />
         <q-btn
           color="brown-7"
@@ -51,10 +53,42 @@
     </q-card-section>
   </q-card>
 </template>
-<script setup lang="ts">
-import { ref } from "vue";
+<script lang="ts">
+import { ref, defineComponent } from "vue";
+import { signin } from "@/apis/userApis";
+import { useUserStore } from "@/stores/user";
+import { successAlert } from "@/utils/common";
 
-const id = ref("");
-const password = ref("");
-const saveInfo = ref(false);
+export default defineComponent({
+  name: "SignIn",
+  emits: ["success-signin"],
+  setup(props, { emit }) {
+    const loginForm = ref({
+      nickName: "",
+      password: "",
+    });
+    const saveInfo = ref(false);
+
+    const userStore = useUserStore();
+    const doSignin = async () => {
+      const result = await signin(loginForm.value);
+      if (result) {
+        userStore.setUser(result);
+        userStore.setUserNickName(loginForm.value.nickName);
+        successAlert(`환영합니다. ${loginForm.value.nickName}님!`);
+        emit("success-signin");
+      }
+    };
+
+    const setJoinId = (nickName: string) => {
+      loginForm.value.nickName = nickName;
+    };
+    return {
+      loginForm,
+      saveInfo,
+      setJoinId,
+      doSignin,
+    };
+  },
+});
 </script>

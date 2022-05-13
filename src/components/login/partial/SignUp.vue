@@ -51,6 +51,7 @@
             (val) =>
               val === registerForm.password || '비밀번호가 일치하지않습니다.',
           ]"
+          @keypress.enter="submitForm"
         />
         <!-- <q-checkbox
           v-model="saveInfo"
@@ -78,10 +79,10 @@
 <script setup lang="ts">
 import type { SignupForm } from "@/utils/typeInterface";
 import { ref } from "vue";
-import { inputRequiredValidation } from "@/utils/common";
+import { inputRequiredValidation, successAlert } from "@/utils/common";
 import { signup } from "@/apis/userApis";
 
-const emits = defineEmits(["success_signup", "view-singin"]);
+const emits = defineEmits(["success-signup", "view-singin"]);
 
 const emailRef = ref();
 const nickNameRef = ref();
@@ -99,7 +100,8 @@ const passwordCheck = ref("");
 const registerUser = async () => {
   const result = await signup(registerForm.value);
   if (result) {
-    emits("success_signup", registerForm.value.email);
+    successAlert("회원가입이 완료되었습니다.");
+    emits("success-signup", registerForm.value.email);
   }
 };
 

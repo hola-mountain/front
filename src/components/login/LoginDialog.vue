@@ -6,9 +6,18 @@
     class="login-dialog"
     @hide="reset"
   >
-    <div class="container">
-      <SignIn v-if="isSigninMode" @view-singup="isSigninMode = false" />
-      <SignUp v-else @view-singin="isSigninMode = true" />
+    <div class="container" v-if="isOpen">
+      <SignIn
+        v-if="isSigninMode"
+        @view-singup="isSigninMode = false"
+        @success-signin="isOpen = false"
+        ref="signinRef"
+      />
+      <SignUp
+        v-else
+        @view-singin="isSigninMode = true"
+        @success-signup="successSignup"
+      />
     </div>
   </q-dialog>
 </template>
@@ -21,29 +30,28 @@ export default defineComponent({
   components: { SignIn, SignUp },
   setup() {
     const isOpen = ref(false);
-    const id = ref("");
-    const password = ref("");
-    const saveInfo = ref(false);
-
     const isSigninMode = ref(true);
+
+    const signinRef = ref();
 
     const openDialog = () => {
       isOpen.value = true;
     };
 
     const reset = () => {
-      id.value = "";
-      password.value = "";
-      saveInfo.value = true;
       isSigninMode.value = true;
     };
+
+    const successSignup = (joinNickName: string) => {
+      isSigninMode.value = true;
+    };
+
     return {
-      id,
-      password,
+      signinRef,
       isOpen,
       openDialog,
-      saveInfo,
       isSigninMode,
+      successSignup,
       reset,
     };
   },

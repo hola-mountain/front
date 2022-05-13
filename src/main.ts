@@ -1,5 +1,6 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
+import piniaPersist from "pinia-plugin-persist";
 import { Quasar, Notify } from "quasar";
 
 import "@/assets/css/reset.sass";
@@ -12,7 +13,10 @@ import router from "./router";
 
 const app = createApp(App);
 
-app.use(createPinia());
+const pinia = createPinia();
+pinia.use(piniaPersist);
+
+app.use(pinia);
 app.use(router);
 app.use(Quasar, {
   plugins: { Notify }, // import Quasar plugins and add here
