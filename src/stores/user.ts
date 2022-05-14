@@ -4,6 +4,7 @@ import { defineStore } from "pinia";
 export const useUserStore = defineStore({
   id: "user",
   state: () => ({
+    userId: 0,
     userNickName: "",
     accessToken: "",
     refreshToken: "",
@@ -24,6 +25,7 @@ export const useUserStore = defineStore({
     getAccessToken: (state) => state.accessToken,
     getRefreshToken: (state) => state.refreshToken,
     getNickName: (state) => state.userNickName,
+    getUserId: (state) => state.userId,
   },
   persist: {
     enabled: true,

@@ -1,21 +1,35 @@
 import Axios from "axios";
 import { errorAlert } from "./common";
+import {
+  Loading,
+  // optional!, for example below
+  // with custom spinner
+  QSpinnerGears,
+} from "quasar";
 const instance = Axios.create();
 
 instance.interceptors.request.use(
   function (config) {
+    Loading.show({
+      customClass: "loading",
+      spinnerSize: 0,
+      // other props
+    });
     return config;
   },
   function (error) {
+    Loading.hide();
     return Promise.reject(error);
   }
 );
 
 instance.interceptors.response.use(
   function (response) {
+    Loading.hide();
     return response;
   },
   function (error) {
+    Loading.hide();
     const basicMsg = "오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
     console.log(error.status);
     console.log(error.response?.status);
