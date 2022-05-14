@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo start Holam Front Main Branch
+      - echo Insatlling NPM Packages and wget Enviorment File
+  pre_build:
+    commands:
+      - npm install
+  build:
+    commands:
+      - echo npm build start `date`
+      - npm run build-prod
+  post_build:
+    commands:
+      - ls -al
+      - echo Copy Vue.js Build File
+      - aws s3 cp --recursive dist/ s3://holam-front-s3
+      - echo Build completed on `date`
