@@ -1,19 +1,49 @@
 <template>
   <section class="q-pa-xl review">
-    <h4 class="text-center q-mt-lg">Review</h4>
-    <div class="row justify-center q-pa-xl">
-      <q-card class="my-card q-ma-md" v-for="item in 4" :key="item">
-        <img src="https://cdn.quasar.dev/img/mountains.jpg" />
+    <h4 class="text-center q-my-lg text-bold text-blue-grey-10">
+      이미 많은 사람이 Holam을 통해 산을 오르고 있습니다.
+    </h4>
+    <div class="q-pa-xl">
+      <swiper
+        :slidesPerView="5"
+        :spaceBetween="30"
+        :modules="modules"
+        :navigation="true"
+        class="mySwiper"
+        :breakpoints="{
+          '300': {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          '640': {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          },
+          '950': {
+            slidesPerView: 4,
+            spaceBetween: 40,
+          },
+          '1250': {
+            slidesPerView: 5,
+            spaceBetween: 50,
+          },
+        }"
+      >
+        <swiper-slide v-for="item in 10" :key="item">
+          <q-card class="my-card">
+            <img src="https://cdn.quasar.dev/img/mountains.jpg" />
 
-        <q-card-section>
-          <div class="text-h6">Our Changing Planet</div>
-          <div class="text-subtitle2">by John Doe</div>
-        </q-card-section>
-        <q-card-actions>
-          <q-rating v-model="stars" :max="5" size="30px" />
-        </q-card-actions>
-        <q-card-section class="q-pt-none"> safasfsafsaf </q-card-section>
-      </q-card>
+            <q-card-section>
+              <div class="text-h6">Our Changing Planet</div>
+              <div class="text-subtitle2">by John Doe</div>
+            </q-card-section>
+            <q-card-actions>
+              <q-rating v-model="stars" :max="5" size="30px" />
+            </q-card-actions>
+            <q-card-section class="q-pt-none"> safasfsafsaf </q-card-section>
+          </q-card>
+        </swiper-slide>
+      </swiper>
     </div>
     <div class="text-center q-ma-xl">
       <q-btn push color="brown-6" @click="$router.push('/mountains/00')">
@@ -25,11 +55,12 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper";
 
 const stars = ref(4);
+const modules = [Navigation];
 </script>
-<style lang="sass" scoped>
-.my-card
-  width: 100%
-  max-width: 250px
-</style>
+<style lang="sass" scoped></style>

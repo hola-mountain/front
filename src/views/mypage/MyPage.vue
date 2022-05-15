@@ -10,7 +10,7 @@
         :options="[
           { value: 'profile', slot: 'one' },
           { value: 'favorit', slot: 'two' },
-          { value: 'my-review', slot: 'three' },
+          { value: 'review', slot: 'three' },
         ]"
         @update:model-value="movePage"
       >
