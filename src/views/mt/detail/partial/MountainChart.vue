@@ -1,5 +1,6 @@
 <template>
   <div style="width: 400px" class="q-ma-xl">
+    <h4 class="text-bold">상세정보</h4>
     <PolarAreaChart v-bind="polarAreaChartProps" />
   </div>
 </template>
@@ -11,14 +12,20 @@ import { Chart, ChartData, ChartOptions, registerables } from "chart.js";
 
 Chart.register(...registerables);
 const dataValues = ref([2, 7, 4, 10, 5]);
-const dataLabels = ref(["Paris", "Nîmes", "Toulon", "Perpignan", "Autre"]);
+const dataLabels = ref(["경관", "경사도", "소요시간", "주변시설", "교통"]);
 
 const testData = computed<ChartData<"polarArea">>(() => ({
   labels: dataLabels.value,
   datasets: [
     {
       data: dataValues.value,
-      backgroundColor: ["#77CEFF", "#0079AF", "#123E6B", "#97B0C4", "#A5C8ED"],
+      backgroundColor: [
+        "#ffcf9fba",
+        "#a5dfdfba",
+        "#9ad0f5ba",
+        "#ffe6aaba",
+        "#ffb1c1ba",
+      ],
     },
   ],
 }));
