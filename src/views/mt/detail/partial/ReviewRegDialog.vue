@@ -4,10 +4,12 @@
     transition-show="rotate"
     transition-hide="rotate"
     class="dialog"
+    persistent
+    @hide="reset"
   >
     <q-card class="container">
       <q-card-section>
-        <div class="q-pa-md text-h6">리뷰등록</div>
+        <div class="q-pa-md text-h6 text-bold">리뷰등록</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
@@ -37,6 +39,7 @@
             style="width: 100%"
             @added="uploadImg"
             @removed="removeImg"
+            color="teal"
           >
             <template v-slot:header="scope">
               <div class="row no-wrap items-center q-pa-sm q-gutter-xs">
@@ -96,9 +99,21 @@
         </div>
       </q-card-section>
 
-      <q-card-actions align="right">
-        <q-btn flat label="Decline" color="primary" v-close-popup />
-        <q-btn flat label="Accept" color="primary" v-close-popup />
+      <q-card-actions align="right" class="q-px-md">
+        <q-btn
+          flat
+          label="등록"
+          class="text-bold text-h6"
+          color="primary"
+          v-close-popup
+        />
+        <q-btn
+          flat
+          label="취소"
+          class="text-bold text-h6"
+          color="negative"
+          v-close-popup
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -125,6 +140,12 @@ export default defineComponent({
     const removeImg = () => {
       registerForm.value.img = null;
     };
+    const reset = () => {
+      registerForm.value.title = "";
+      registerForm.value.content = "";
+      registerForm.value.rating = 0;
+      registerForm.value.img = null;
+    };
 
     return {
       onDialog,
@@ -132,6 +153,7 @@ export default defineComponent({
       registerForm,
       uploadImg,
       removeImg,
+      reset,
     };
   },
 });
