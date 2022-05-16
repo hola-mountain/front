@@ -12,3 +12,9 @@ export interface SigninResponce {
   accessToken: string;
   refreshToken: string;
 }
+export interface ReviewRegForm {
+  title: string;
+  content: string;
+  rating: number;
+  img: File | null;
+}
