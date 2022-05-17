@@ -12,17 +12,6 @@
         <q-img :src="item.image[0]">
           <div class="absolute-bottom text-h6">{{ item.name }}</div>
         </q-img>
-        <q-card-actions align="right">
-          <q-checkbox
-            keep-color
-            v-model="selected"
-            checked-icon="favorite"
-            unchecked-icon="favorite_border"
-            color="red"
-            :val="item.mountainId"
-          />
-          <q-btn flat round color="primary" icon="share" />
-        </q-card-actions>
 
         <q-card-section>
           {{ item.shortDescription.substring(0, 68) }}
@@ -40,7 +29,7 @@
 </template>
 <script setup lang="ts">
 import type { MountainList } from "@/utils/typeInterface";
-import { ref, type PropType } from "vue";
+import type { PropType } from "vue";
 
 const props = defineProps({
   mountainList: {
@@ -48,8 +37,6 @@ const props = defineProps({
     default: () => [],
   },
 });
-
-const selected = ref(false);
 </script>
 <style scoped>
 .q-img.q-img--menu {

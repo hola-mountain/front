@@ -26,7 +26,7 @@ const route = useRoute();
 const mountainList = ref<MountainList[]>([]);
 
 const params = ref<GetMountainListForm>({
-  pageNum: 1,
+  pageNum: 0,
   pageSize: 12,
   district: (route.params?.cityId as string) || "0",
   isAsc: false,

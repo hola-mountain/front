@@ -174,7 +174,7 @@ export default defineComponent({
     const reset = () => {
       registerForm.value.title = "";
       registerForm.value.comment = "";
-      registerForm.value.star = 0;
+      registerForm.value.star = 10;
       thumbImg.value = null;
     };
 

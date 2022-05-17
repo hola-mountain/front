@@ -7,7 +7,7 @@
     </div>
     <MountainReview
       :reviewList="reviewList"
-      @success-reg="fetchReviews(`${route.params.mtId}`)"
+      @success-reg="refetchReview"
       :isMoreInfo="pagingInfo.moreInfo"
       @more-info="getMoreReviews"
     />
@@ -86,6 +86,11 @@ const fetchReviews = async (id: string) => {
       reviewList.value = reviewList.value.concat(result);
     }
   }
+};
+
+const refetchReview = () => {
+  pagingInfo.value.pageNum = 0;
+  fetchReviews(route.params.mtId as string);
 };
 
 const getMoreReviews = async (done: any) => {

@@ -97,7 +97,7 @@ export const thumbnailFileUpload = async (
     formData.append("file", file);
 
     const result: UploadSuccess = await http.post(
-      `/api/upload/${id}`,
+      `/mountain/api/upload/${id}`,
       formData
     );
     return result;

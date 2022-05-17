@@ -15,7 +15,11 @@
             style="min-width: 150px"
           >
             <q-card class="my-card q-ma-sm">
-              <img v-if="rev.thumbImg" :src="rev.thumbImg" />
+              <img
+                v-if="rev.thumbImg"
+                :src="rev.thumbImg"
+                style="width: 200px"
+              />
 
               <q-card-section>
                 <div class="text-h6">{{ rev.title }}</div>
