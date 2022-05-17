@@ -13,6 +13,17 @@ export default {
       infowindow: null,
     };
   },
+  props: {
+    mapInfo: {
+      type: Object,
+      default: () => {
+        return {
+          latitude: 0,
+          longitude: 0,
+        };
+      },
+    },
+  },
   mounted() {
     if (window.kakao && window.kakao.maps) {
       this.initMap();
@@ -29,8 +40,8 @@ export default {
     initMap() {
       const container = document.getElementById("map");
       const position = new kakao.maps.LatLng(
-        41.99023681504122,
-        128.08597278301903
+        this.mapInfo.latitude,
+        this.mapInfo.longitude
       );
       const options = {
         center: position,

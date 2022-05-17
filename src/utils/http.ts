@@ -43,7 +43,7 @@ instance.interceptors.response.use(
   }
 );
 
-const baseUrl = "http://15.165.192.190:8080";
+const baseUrl = "http://54.180.124.185:8080";
 // const baseUrl = import.meta.env.VITE_BASE_API_URL;
 const defaultHeaders = {
   "Content-Type": "application/json;charset=UTF-8",
@@ -75,6 +75,30 @@ const httpInstance = {
       ...additionalConfig,
     };
     const promise = instance.post(url, params, config);
+    return promise.then(({ data }) => data);
+  },
+  put(uri: string, params = {}, headers = {}, additionalConfig = {}) {
+    const url = `${baseUrl}${uri}`;
+    const config = {
+      headers: {
+        ...defaultHeaders,
+        ...headers,
+      },
+      ...additionalConfig,
+    };
+    const promise = instance.put(url, params, config);
+    return promise.then(({ data }) => data);
+  },
+  patch(uri: string, params = {}, headers = {}, additionalConfig = {}) {
+    const url = `${baseUrl}${uri}`;
+    const config = {
+      headers: {
+        ...defaultHeaders,
+        ...headers,
+      },
+      ...additionalConfig,
+    };
+    const promise = instance.patch(url, params, config);
     return promise.then(({ data }) => data);
   },
   delete(uri: string, params = {}, headers = {}, additionalConfig = {}) {

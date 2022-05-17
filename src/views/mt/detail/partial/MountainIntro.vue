@@ -27,22 +27,33 @@
         />
       </q-carousel>
     </div>
-    <div class="q-pa-md .mt-info">
+    <div class="q-pa-md mt-info">
       <h5 class="text-bold q-mb-sm">산 이름</h5>
-      <p>한라산</p>
+      <p>{{ mainInfo.name }}</p>
       <h5 class="text-bold q-mb-sm">산 높이</h5>
-      <p>해발 666m</p>
+      <p>해발 {{ mainInfo.height }}m</p>
       <h5 class="text-bold q-mb-sm">산 정보</h5>
       <p>
-        이산은 무슨무슨 산이다이산은 무슨무슨 산이다이산은 무슨무슨 산이다이산은
-        무슨무슨 산이다이산은 무슨무슨 산이다이산은 무슨무슨 산이다이산은
-        무슨무슨 산이다
+        {{ mainInfo.description }}
       </p>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
+const props = defineProps({
+  mainInfo: {
+    type: Object,
+    default: () => {
+      return {
+        name: "",
+        height: 0,
+        description: "",
+        images: [],
+      };
+    },
+  },
+});
 
 const slide = ref(1);
 </script>

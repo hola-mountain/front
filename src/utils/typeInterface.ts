@@ -18,3 +18,16 @@ export interface ReviewRegForm {
   rating: number;
   img: File | null;
 }
+export interface GetMountainListForm {
+  pageNum: number;
+  pageSize: number;
+  district: string;
+  isAsc: boolean;
+  sortBy: string;
+}
+export interface MountainList {
+  mountainId: number;
+  name: string;
+  shortDescription: string;
+  images: string[];
+}
