@@ -1,7 +1,9 @@
 import type {
   MountainList,
   GetMountainListForm,
+  MountainDetail,
   SignupForm,
+  ReviewRegForm,
 } from "../utils/typeInterface";
 import http from "../utils/http";
 
@@ -17,9 +19,9 @@ export const getMountains = async (
 };
 export const getMountainDetail = async (
   mountainId: string
-): Promise<undefined> => {
+): Promise<MountainDetail | undefined> => {
   try {
-    const result = await http.get(`/mountain/${mountainId}`);
+    const result: MountainDetail = await http.get(`/mountain/${mountainId}`);
     return result;
   } catch (e) {
     console.log(e);
@@ -37,7 +39,7 @@ export const getMountainReviews = async (
 };
 export const registerMountainReview = async (
   mountainId: string,
-  params: SignupForm
+  params: ReviewRegForm
 ): Promise<undefined> => {
   try {
     const result = await http.post(`/mountain/${mountainId}/review`, params);
@@ -81,4 +83,6 @@ export const recommendMountainReview = async (
 export default {
   getMountains,
   getMountainDetail,
+  registerMountainReview,
+  getMountainReviews,
 };

@@ -8,7 +8,7 @@
     </div>
     <div class="row justify-center q-pb-xl">
       <div v-for="item in 20" :key="item" style="width: 300px">
-        <q-card class="my-card q-ma-md" @click="basic = true">
+        <q-card class="my-card q-ma-md">
           <img src="https://cdn.quasar.dev/img/mountains.jpg" />
 
           <q-card-section>
@@ -22,38 +22,60 @@
         </q-card>
       </div>
     </div>
-    <ReviewRegDialog ref="regRef" />
+    <ReviewRegDialog ref="regRef" @success-reg="fetchReviews" />
     <ReviewDetailDialog ref="detailRef" />
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import ReviewRegDialog from "./ReviewRegDialog.vue";
 import ReviewDetailDialog from "./ReviewDetailDialog.vue";
+import { useUserStore } from "@/stores/user";
+import { warningAlert } from "@/utils/common";
+import { getMountainReviews } from "@/apis/mountainApis";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "MountainReview",
   components: { ReviewRegDialog, ReviewDetailDialog },
   setup() {
-    const basic = ref(false);
+    const route = useRoute();
     const stars = ref(4);
     const regRef = ref();
     const detailRef = ref();
+    const userStore = useUserStore();
 
     const openRegDialog = () => {
-      regRef.value.openDialog();
+      if (userStore.getUserId) {
+        regRef.value.openDialog();
+      } else {
+        warningAlert("로그인 후 이용가능합니다!");
+      }
     };
     const openDetailDialog = () => {
       detailRef.value.openDialog();
     };
 
+    const fetchReviews = async () => {
+      const result = await getMountainReviews(route.params.mtId as string);
+      if (result) {
+        //
+      }
+    };
+
+    onMounted(() => {
+      if (route.params?.mtId) {
+        fetchReviews();
+      }
+    });
+
     return {
-      basic,
       stars,
       regRef,
       detailRef,
       openRegDialog,
       openDetailDialog,
+      fetchReviews,
     };
   },
 });

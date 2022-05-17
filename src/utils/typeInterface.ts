@@ -14,9 +14,11 @@ export interface SigninResponce {
 }
 export interface ReviewRegForm {
   title: string;
-  content: string;
-  rating: number;
-  img: File | null;
+  comment: string;
+  star: number;
+  userId: number;
+  thumbImg: File | null;
+  nickname: string;
 }
 export interface GetMountainListForm {
   pageNum: number;
@@ -29,5 +31,17 @@ export interface MountainList {
   mountainId: number;
   name: string;
   shortDescription: string;
+  images: string[];
+}
+export interface MountainDetail {
+  mountainId: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+  height: number;
+  hikingLevel: number;
+  viewLevel: number;
+  attractLevel: number;
+  description: string;
   images: string[];
 }

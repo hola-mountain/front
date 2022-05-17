@@ -14,12 +14,18 @@
 
       <q-card-section class="q-pt-none">
         <div class="q-px-md">
-          <q-input outlined v-model="registerForm.title" label="제목" />
+          <q-input
+            outlined
+            v-model="registerForm.title"
+            label="제목"
+            :rules="[inputRequiredValidation]"
+            ref="titleRef"
+          />
         </div>
         <div class="q-pa-md">
           <span class="q-mx-md">평점</span>
           <q-rating
-            v-model="registerForm.rating"
+            v-model="registerForm.star"
             size="2em"
             :max="5"
             color="star"
@@ -27,10 +33,12 @@
         </div>
         <div class="q-pa-md">
           <q-input
-            v-model="registerForm.content"
+            v-model="registerForm.comment"
             outlined
+            ref="commentRef"
             type="textarea"
             label="내용"
+            :rules="[inputRequiredValidation]"
           />
         </div>
         <div class="q-pa-md">
@@ -44,7 +52,9 @@
             <template v-slot:header="scope">
               <div class="row no-wrap items-center q-pa-sm q-gutter-xs">
                 <div class="col">
-                  <div class="q-uploader__title q-mx-md">이미지 업로드</div>
+                  <div class="q-uploader__title q-mx-md">
+                    썸네일 이미지 업로드
+                  </div>
                 </div>
                 <q-btn
                   v-if="scope.canAddFiles"
@@ -105,7 +115,7 @@
           label="등록"
           class="text-bold text-h6"
           color="primary"
-          v-close-popup
+          @click="submitForm"
         />
         <q-btn
           flat
@@ -121,30 +131,73 @@
 <script lang="ts">
 import type { ReviewRegForm } from "@/utils/typeInterface";
 import { ref, defineComponent } from "vue";
+import { useUserStore } from "@/stores/user";
+import { useRoute } from "vue-router";
+import { registerMountainReview } from "@/apis/mountainApis";
+import {
+  successAlert,
+  inputRequiredValidation,
+  errorAlert,
+} from "@/utils/common";
+
 export default defineComponent({
   name: "ReviewRegDialog",
-  setup() {
+  emits: ["success-reg"],
+  setup(props, { emit }) {
+    const route = useRoute();
+    const userStore = useUserStore();
     const registerForm = ref<ReviewRegForm>({
       title: "",
-      content: "",
-      rating: 0,
-      img: null,
+      comment: "",
+      userId: userStore.getUserId,
+      star: 0,
+      thumbImg: null,
+      nickname: userStore.getNickName,
     });
+
+    const commentRef = ref();
+    const titleRef = ref();
+
     const onDialog = ref(false);
     const openDialog = () => {
       onDialog.value = true;
     };
     const uploadImg = (info: File[]) => {
-      registerForm.value.img = info[0];
+      registerForm.value.thumbImg = info[0];
     };
     const removeImg = () => {
-      registerForm.value.img = null;
+      registerForm.value.thumbImg = null;
     };
     const reset = () => {
       registerForm.value.title = "";
-      registerForm.value.content = "";
-      registerForm.value.rating = 0;
-      registerForm.value.img = null;
+      registerForm.value.comment = "";
+      registerForm.value.star = 0;
+      registerForm.value.thumbImg = null;
+    };
+
+    const submitForm = () => {
+      commentRef.value.validate();
+      titleRef.value.validate();
+
+      if (!commentRef.value.hasError && !titleRef.value.hasError) {
+        if (registerForm.value.thumbImg) {
+          registerReview();
+        } else {
+          errorAlert("썸네일 이미지를 넣어주세요.");
+        }
+      }
+    };
+
+    const registerReview = async () => {
+      const result = await registerMountainReview(
+        route.params.mtId as string,
+        registerForm.value
+      );
+      if (result) {
+        successAlert("리뷰가 등록되었습니다!");
+        emit("success-reg");
+        onDialog.value = false;
+      }
     };
 
     return {
@@ -154,6 +207,11 @@ export default defineComponent({
       uploadImg,
       removeImg,
       reset,
+      registerReview,
+      inputRequiredValidation,
+      commentRef,
+      titleRef,
+      submitForm,
     };
   },
 });

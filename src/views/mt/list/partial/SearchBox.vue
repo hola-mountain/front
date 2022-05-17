@@ -30,6 +30,8 @@ import { CITY_CODE } from "@/utils/constants";
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
+const emits = defineEmits(["change-city"]);
+
 const route = useRoute();
 const router = useRouter();
 const selectedCity = ref<{ label: string; value: string }>({
@@ -41,6 +43,7 @@ const options = CITY_CODE;
 
 const changeCity = (city: { label: string; value: string }) => {
   router.push(`/mountains/${city.value}`);
+  emits("change-city", city.value);
 };
 
 onMounted(() => {
