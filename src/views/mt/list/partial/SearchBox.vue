@@ -17,9 +17,10 @@
         v-model="searchText"
         standout="bg-teal text-white"
         class="q-ma-md item"
+        @keyup.enter="searchMountain"
       >
         <template v-slot:after>
-          <q-btn round icon="search" color="teal" />
+          <q-btn round icon="search" color="teal" @click="searchMountain" />
         </template>
       </q-input>
     </div>
@@ -30,7 +31,7 @@ import { CITY_CODE } from "@/utils/constants";
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-const emits = defineEmits(["change-city"]);
+const emits = defineEmits(["change-city", "search-mountain"]);
 
 const route = useRoute();
 const router = useRouter();
@@ -44,6 +45,10 @@ const options = CITY_CODE;
 const changeCity = (city: { label: string; value: string }) => {
   router.push(`/mountains/${city.value}`);
   emits("change-city", city.value);
+};
+
+const searchMountain = () => {
+  emits("search-mountain", searchText.value);
 };
 
 onMounted(() => {

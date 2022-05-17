@@ -27,7 +27,7 @@
           <q-rating
             v-model="registerForm.star"
             size="2em"
-            :max="5"
+            :max="10"
             color="star"
           />
         </div>
@@ -153,7 +153,7 @@ export default defineComponent({
       title: "",
       comment: "",
       userId: 0,
-      star: 0,
+      star: 10,
       nickname: "",
     });
     const thumbImg = ref<File | null>(null);

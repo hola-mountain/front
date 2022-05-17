@@ -1,6 +1,6 @@
 <template>
   <section class="q-ma-xl mountains">
-    <SearchBox @change-city="changeCity" />
+    <SearchBox @change-city="changeCity" @search-mountain="searchMountain" />
     <MountainListView :mountain-list="mountainList" />
     <!-- <div class="q-mt-xl">
       <q-pagination
@@ -36,6 +36,11 @@ const params = ref<GetMountainListForm>({
 
 const changeCity = (code: string) => {
   params.value.district = code;
+  fetchMountainList();
+};
+
+const searchMountain = (search: string) => {
+  params.value.search = search;
   fetchMountainList();
 };
 
