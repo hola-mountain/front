@@ -7,7 +7,7 @@
       @click="$router.push('/')"
     />
     <div>
-      <q-btn glossy class="q-mx-md" @click="$router.push('/mountains/00')">
+      <q-btn glossy class="q-mx-md" @click="$router.push('/mountains/0')">
         <q-icon left size="35px" name="landscape" />
         <div class="text-bold">전국 산 정보</div>
       </q-btn>

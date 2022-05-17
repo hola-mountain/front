@@ -1,5 +1,5 @@
 export const CITY_CODE = [
-  { label: "전국", value: "00" },
+  { label: "전국", value: "0" },
   { label: "서울특별시", value: "11" },
   { label: "부산광역시", value: "21" },
   { label: "대구광역시", value: "22" },

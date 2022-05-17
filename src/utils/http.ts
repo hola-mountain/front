@@ -1,11 +1,6 @@
 import Axios from "axios";
 import { errorAlert } from "./common";
-import {
-  Loading,
-  // optional!, for example below
-  // with custom spinner
-  QSpinnerGears,
-} from "quasar";
+import { Loading } from "quasar";
 const instance = Axios.create();
 
 instance.interceptors.request.use(
@@ -31,8 +26,6 @@ instance.interceptors.response.use(
   function (error) {
     Loading.hide();
     const basicMsg = "오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
-    console.log(error.status);
-    console.log(error.response?.status);
     if (error.response?.status === 400) {
       const errorMsg = error.response?.data?.errorMessage || basicMsg;
       errorAlert(errorMsg);

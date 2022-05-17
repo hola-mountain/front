@@ -17,7 +17,6 @@ export interface ReviewRegForm {
   comment: string;
   star: number;
   userId: number;
-  thumbImg: File | null;
   nickname: string;
 }
 export interface GetMountainListForm {
@@ -26,12 +25,13 @@ export interface GetMountainListForm {
   district: string;
   isAsc: boolean;
   sortBy: string;
+  search: string;
 }
 export interface MountainList {
   mountainId: number;
   name: string;
   shortDescription: string;
-  images: string[];
+  image: string[];
 }
 export interface MountainDetail {
   mountainId: number;
@@ -43,5 +43,27 @@ export interface MountainDetail {
   viewLevel: number;
   attractLevel: number;
   description: string;
-  images: string[];
+  image: string[];
+}
+
+export interface UploadSuccess {
+  status: string;
+  keys: string[];
+}
+
+export interface ReviewList {
+  comment: string;
+  id: number;
+  mountainId: number;
+  nickname: string;
+  ratingNum: number;
+  star: number;
+  thumbImg: string | null;
+  title: string;
+  userId: number;
+}
+
+export interface PageInfo {
+  pageNum: number;
+  pageSize: number;
 }

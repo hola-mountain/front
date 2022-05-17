@@ -61,7 +61,7 @@ import { successAlert } from "@/utils/common";
 
 export default defineComponent({
   name: "SignIn",
-  emits: ["success-signin"],
+  emits: ["success-signin", "view-singup"],
   setup(props, { emit }) {
     const loginForm = ref({
       nickName: "",

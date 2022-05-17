@@ -10,32 +10,22 @@
         class="rounded-borders"
       >
         <q-carousel-slide
-          :name="1"
-          img-src="https://cdn.quasar.dev/img/mountains.jpg"
-        />
-        <q-carousel-slide
-          :name="2"
-          img-src="https://cdn.quasar.dev/img/parallax1.jpg"
-        />
-        <q-carousel-slide
-          :name="3"
-          img-src="https://cdn.quasar.dev/img/parallax2.jpg"
-        />
-        <q-carousel-slide
-          :name="4"
-          img-src="https://cdn.quasar.dev/img/quasar.jpg"
+          v-for="(img, idx) in mainInfo.images"
+          :key="idx"
+          :name="idx + 1"
+          :img-src="img"
         />
       </q-carousel>
     </div>
-    <div class="q-pa-md mt-info">
+    <div class="q-pa-xl mt-info">
       <h5 class="text-bold q-mb-sm">산 이름</h5>
-      <p>{{ mainInfo.name }}</p>
+      <h6 class="q-mb-md">{{ mainInfo.name }}</h6>
       <h5 class="text-bold q-mb-sm">산 높이</h5>
-      <p>해발 {{ mainInfo.height }}m</p>
+      <h6 class="q-mb-md">해발 {{ mainInfo.height }}m</h6>
       <h5 class="text-bold q-mb-sm">산 정보</h5>
-      <p>
+      <h6 class="q-mb-md">
         {{ mainInfo.description }}
-      </p>
+      </h6>
     </div>
   </div>
 </template>

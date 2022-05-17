@@ -130,10 +130,13 @@
 </template>
 <script lang="ts">
 import type { ReviewRegForm } from "@/utils/typeInterface";
-import { ref, defineComponent } from "vue";
+import { ref, defineComponent, onMounted } from "vue";
 import { useUserStore } from "@/stores/user";
 import { useRoute } from "vue-router";
-import { registerMountainReview } from "@/apis/mountainApis";
+import {
+  registerMountainReview,
+  thumbnailFileUpload,
+} from "@/apis/mountainApis";
 import {
   successAlert,
   inputRequiredValidation,
@@ -149,11 +152,11 @@ export default defineComponent({
     const registerForm = ref<ReviewRegForm>({
       title: "",
       comment: "",
-      userId: userStore.getUserId,
+      userId: 0,
       star: 0,
-      thumbImg: null,
-      nickname: userStore.getNickName,
+      nickname: "",
     });
+    const thumbImg = ref<File | null>(null);
 
     const commentRef = ref();
     const titleRef = ref();
@@ -163,16 +166,16 @@ export default defineComponent({
       onDialog.value = true;
     };
     const uploadImg = (info: File[]) => {
-      registerForm.value.thumbImg = info[0];
+      thumbImg.value = info[0];
     };
     const removeImg = () => {
-      registerForm.value.thumbImg = null;
+      thumbImg.value = null;
     };
     const reset = () => {
       registerForm.value.title = "";
       registerForm.value.comment = "";
       registerForm.value.star = 0;
-      registerForm.value.thumbImg = null;
+      thumbImg.value = null;
     };
 
     const submitForm = () => {
@@ -180,11 +183,7 @@ export default defineComponent({
       titleRef.value.validate();
 
       if (!commentRef.value.hasError && !titleRef.value.hasError) {
-        if (registerForm.value.thumbImg) {
-          registerReview();
-        } else {
-          errorAlert("썸네일 이미지를 넣어주세요.");
-        }
+        registerReview();
       }
     };
 
@@ -194,11 +193,31 @@ export default defineComponent({
         registerForm.value
       );
       if (result) {
-        successAlert("리뷰가 등록되었습니다!");
-        emit("success-reg");
-        onDialog.value = false;
+        if (thumbImg.value) {
+          imgUpload(result.id);
+        } else {
+          successWork();
+        }
       }
     };
+
+    const imgUpload = async (id: number) => {
+      const result = await thumbnailFileUpload(id, thumbImg.value as File);
+      if (result) {
+        successWork();
+      }
+    };
+
+    const successWork = () => {
+      successAlert("리뷰가 등록되었습니다!");
+      emit("success-reg");
+      onDialog.value = false;
+    };
+
+    onMounted(() => {
+      registerForm.value.nickname = userStore.getNickName;
+      registerForm.value.userId = userStore.getUserId;
+    });
 
     return {
       onDialog,

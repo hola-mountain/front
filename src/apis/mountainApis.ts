@@ -4,6 +4,9 @@ import type {
   MountainDetail,
   SignupForm,
   ReviewRegForm,
+  UploadSuccess,
+  ReviewList,
+  PageInfo,
 } from "../utils/typeInterface";
 import http from "../utils/http";
 
@@ -28,10 +31,13 @@ export const getMountainDetail = async (
   }
 };
 export const getMountainReviews = async (
-  mountainId: string
-): Promise<undefined> => {
+  mountainId: string,
+  pageInfo: PageInfo
+): Promise<ReviewList[] | undefined> => {
   try {
-    const result = await http.get(`/mountain/${mountainId}/review`);
+    const result: ReviewList[] = await http.get(
+      `/mountain/${mountainId}/review?pageNum=${pageInfo.pageNum}&pageSize=${pageInfo.pageSize}`
+    );
     return result;
   } catch (e) {
     console.log(e);
@@ -40,9 +46,12 @@ export const getMountainReviews = async (
 export const registerMountainReview = async (
   mountainId: string,
   params: ReviewRegForm
-): Promise<undefined> => {
+): Promise<ReviewList | undefined> => {
   try {
-    const result = await http.post(`/mountain/${mountainId}/review`, params);
+    const result: ReviewList = await http.post(
+      `/mountain/${mountainId}/review`,
+      params
+    );
     return result;
   } catch (e) {
     console.log(e);
@@ -79,10 +88,28 @@ export const recommendMountainReview = async (
     console.log(e);
   }
 };
+export const thumbnailFileUpload = async (
+  id: number,
+  file: File
+): Promise<UploadSuccess | undefined> => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const result: UploadSuccess = await http.post(
+      `/api/upload/${id}`,
+      formData
+    );
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 export default {
   getMountains,
   getMountainDetail,
   registerMountainReview,
   getMountainReviews,
+  thumbnailFileUpload,
 };

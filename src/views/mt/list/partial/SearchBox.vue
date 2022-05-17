@@ -36,7 +36,7 @@ const route = useRoute();
 const router = useRouter();
 const selectedCity = ref<{ label: string; value: string }>({
   label: "전국",
-  value: "00",
+  value: "0",
 });
 const searchText = ref("");
 const options = CITY_CODE;

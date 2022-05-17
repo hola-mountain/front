@@ -9,7 +9,7 @@
         class="my-card cursor-pointer"
         @click="$router.push(`/mountains/detail/${item.mountainId}`)"
       >
-        <q-img :src="item.images[0]">
+        <q-img :src="item.image[0]">
           <div class="absolute-bottom text-h6">{{ item.name }}</div>
         </q-img>
         <q-card-actions align="right">
@@ -51,3 +51,8 @@ const props = defineProps({
 
 const selected = ref(false);
 </script>
+<style scoped>
+.q-img.q-img--menu {
+  height: 200px;
+}
+</style>
