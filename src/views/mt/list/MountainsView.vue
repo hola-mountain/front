@@ -21,6 +21,7 @@ import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import SearchBox from "./partial/SearchBox.vue";
 import MountainListView from "./partial/MountainListView.vue";
+import { useSearchStore } from "@/stores/search";
 
 const route = useRoute();
 const mountainList = ref<MountainList[]>([]);
@@ -34,6 +35,8 @@ const params = ref<GetMountainListForm>({
   search: "",
 });
 
+const searchStore = useSearchStore();
+
 const changeCity = (code: string) => {
   params.value.district = code;
   fetchMountainList();
@@ -41,6 +44,8 @@ const changeCity = (code: string) => {
 
 const searchMountain = (search: string) => {
   params.value.search = search;
+  searchStore.setSearchText(search);
+
   fetchMountainList();
 };
 
@@ -52,6 +57,9 @@ const fetchMountainList = async () => {
 };
 
 onMounted(() => {
+  if (searchStore.getSearchText) {
+    params.value.search = searchStore.getSearchText;
+  }
   fetchMountainList();
 });
 </script>

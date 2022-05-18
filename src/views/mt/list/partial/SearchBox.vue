@@ -30,8 +30,11 @@
 import { CITY_CODE } from "@/utils/constants";
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useSearchStore } from "@/stores/search";
 
 const emits = defineEmits(["change-city", "search-mountain"]);
+
+const searchStore = useSearchStore();
 
 const route = useRoute();
 const router = useRouter();
@@ -55,6 +58,9 @@ onMounted(() => {
   const city = CITY_CODE.find((n) => n.value === route.params?.cityId);
   if (city) {
     selectedCity.value = city;
+  }
+  if (searchStore.getSearchText) {
+    searchText.value = searchStore.getSearchText;
   }
 });
 </script>
