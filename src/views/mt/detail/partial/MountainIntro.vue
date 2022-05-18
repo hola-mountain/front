@@ -19,7 +19,16 @@
     </div>
     <div class="q-pa-xl mt-info">
       <h5 class="text-bold q-mb-sm">산 이름</h5>
-      <h6 class="q-mb-md">{{ mainInfo.name }}</h6>
+      <h6 class="q-mb-md">
+        {{ mainInfo.name
+        }}<q-checkbox
+          keep-color
+          v-model="selected"
+          checked-icon="favorite"
+          unchecked-icon="favorite_border"
+          color="red"
+        />
+      </h6>
       <h5 class="text-bold q-mb-sm">산 높이</h5>
       <h6 class="q-mb-md">해발 {{ mainInfo.height }}m</h6>
       <h5 class="text-bold q-mb-sm">산 정보</h5>
@@ -46,4 +55,5 @@ const props = defineProps({
 });
 
 const slide = ref(1);
+const selected = ref(false);
 </script>

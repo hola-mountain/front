@@ -23,8 +23,26 @@ export const signup = async (
     console.log(e);
   }
 };
+export const getMyProfile = async (userId: number): Promise<any> => {
+  try {
+    const result = await http.get(`/mypage/myInfo`, { userId });
+    console.log(result);
+  } catch (e) {
+    console.log(e);
+  }
+};
+export const getMyBadges = async (userId: number): Promise<any> => {
+  try {
+    const result = await http.get(`/mypage/badges`, { userId });
+    console.log(result);
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 export default {
   signin,
   signup,
+  getMyProfile,
+  getMyBadges,
 };

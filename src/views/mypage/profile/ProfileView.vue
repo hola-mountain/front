@@ -31,5 +31,25 @@
   </section>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useUserStore } from "@/stores/user";
+import { getMyProfile, getMyBadges } from "@/apis/userApis";
+
+const userStore = useUserStore();
+const getProfile = async () => {
+  const result = await getMyProfile(userStore.getUserId);
+  if (result) {
+    console.log(result);
+  }
+};
+const getBadges = async () => {
+  const result = await getMyBadges(userStore.getUserId);
+  if (result) {
+    console.log(result);
+  }
+};
+onMounted(() => {
+  getProfile();
+  getBadges();
+});
 </script>

@@ -57,6 +57,23 @@ export const registerMountainReview = async (
     console.log(e);
   }
 };
+export const thumbnailFileUpload = async (
+  id: number,
+  file: File
+): Promise<UploadSuccess | undefined> => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const result: UploadSuccess = await http.post(
+      `/mountain/api/upload/${id}`,
+      formData
+    );
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
 export const updateMountainReview = async (
   mountainId: string,
   ratingId: string
@@ -83,23 +100,6 @@ export const recommendMountainReview = async (
 ): Promise<undefined> => {
   try {
     const result = await http.post("/users/join", params);
-    return result;
-  } catch (e) {
-    console.log(e);
-  }
-};
-export const thumbnailFileUpload = async (
-  id: number,
-  file: File
-): Promise<UploadSuccess | undefined> => {
-  try {
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const result: UploadSuccess = await http.post(
-      `/mountain/api/upload/${id}`,
-      formData
-    );
     return result;
   } catch (e) {
     console.log(e);
