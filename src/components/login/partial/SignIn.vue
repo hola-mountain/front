@@ -17,7 +17,7 @@
         <q-input
           outlined
           v-model="loginForm.nickName"
-          label="닉네임"
+          label="아이디"
           class="q-mb-md"
           color="green-10"
         />

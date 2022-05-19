@@ -6,6 +6,9 @@
         <h6 class="text-overline" @click="openRegDialog">리뷰등록</h6>
       </q-btn>
     </div>
+    <p class="text-subtitle2 text-center">
+      수정, 삭제는 마이페이지에서 이용가능합니다.
+    </p>
     <div class="q-pa-md" style="width: 90%; margin: 0 auto">
       <q-infinite-scroll @load="onLoad" :offset="300">
         <div class="row justify-start">

@@ -1,5 +1,4 @@
 import type {
-  MountainList,
   GetMountainListForm,
   MountainDetail,
   SignupForm,
@@ -7,24 +6,28 @@ import type {
   UploadSuccess,
   ReviewList,
   PageInfo,
+  PageMountainList,
 } from "../utils/typeInterface";
 import http from "../utils/http";
 
 export const getMountains = async (
   params: GetMountainListForm
-): Promise<MountainList[] | undefined> => {
+): Promise<PageMountainList | undefined> => {
   try {
-    const result: MountainList[] = await http.get("/mountain", params);
+    const result: PageMountainList = await http.get("/mountain", params);
     return result;
   } catch (e) {
     console.log(e);
   }
 };
 export const getMountainDetail = async (
-  mountainId: string
+  mountainId: string,
+  userId: number
 ): Promise<MountainDetail | undefined> => {
   try {
-    const result: MountainDetail = await http.get(`/mountain/${mountainId}`);
+    const result: MountainDetail = await http.get(
+      `/mountain/${mountainId}?userId=${userId}`
+    );
     return result;
   } catch (e) {
     console.log(e);

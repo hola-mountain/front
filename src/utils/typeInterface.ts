@@ -27,6 +27,10 @@ export interface GetMountainListForm {
   sortBy: string;
   search: string;
 }
+export interface PageMountainList {
+  totalPageSize: number;
+  mountainResp: MountainList[];
+}
 export interface MountainList {
   mountainId: number;
   name: string;
@@ -44,6 +48,7 @@ export interface MountainDetail {
   attractLevel: number;
   description: string;
   image: string[];
+  favorite: number;
 }
 
 export interface UploadSuccess {
@@ -72,4 +77,19 @@ export interface PageInfo {
 export interface MyInfo {
   email: string;
   nickName: string;
+}
+export interface BadgeList {
+  achievementId: number;
+  achievementNum: number;
+  badgeId: number;
+  badgeType: string;
+  userId: number;
+}
+export interface FavoriteMountainList {
+  image: string[];
+  mountainId: number;
+  name: string;
+  ratingId: null | number;
+  regdate: null | number[];
+  shortDescription: string;
 }

@@ -1,4 +1,6 @@
 import type {
+  BadgeList,
+  FavoriteMountainList,
   MyInfo,
   ReviewList,
   SigninForm,
@@ -35,18 +37,24 @@ export const getMyProfile = async (
     console.log(e);
   }
 };
-export const getMyBadges = async (userId: number): Promise<any> => {
+export const getMyBadges = async (
+  userId: number
+): Promise<BadgeList[] | undefined> => {
   try {
-    const result = await http.get(`/mypage/badges/${userId}`);
-    console.log(result);
+    const result: BadgeList[] = await http.get(`/mypage/badges/${userId}`);
+    return result;
   } catch (e) {
     console.log(e);
   }
 };
-export const getFavoriteMountainList = async (userId: number): Promise<any> => {
+export const getFavoriteMountainList = async (
+  userId: number
+): Promise<FavoriteMountainList[] | undefined> => {
   try {
-    const result = await http.get(`/mypage/users/favorite/${userId}`);
-    console.log(result);
+    const result: FavoriteMountainList[] = await http.get(
+      `/mypage/users/favorite/${userId}`
+    );
+    return result;
   } catch (e) {
     console.log(e);
   }

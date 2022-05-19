@@ -22,9 +22,11 @@ import KakaoMap from "./partial/KakaoMap.vue";
 import MountainChart from "./partial/MountainChart.vue";
 import MountainIntro from "./partial/MountainIntro.vue";
 import MountainReview from "./partial/MountainReview.vue";
+import { useUserStore } from "@/stores/user";
 
 const route = useRoute();
 const loading = ref(false);
+const userStore = useUserStore();
 
 const mountainDetail = ref<MountainDetail>({
   mountainId: 0,
@@ -37,6 +39,7 @@ const mountainDetail = ref<MountainDetail>({
   attractLevel: 0,
   description: "",
   image: [],
+  favorite: 0,
 });
 
 const reviewList = ref<ReviewList[]>([]);
@@ -52,6 +55,7 @@ const mainInfo = computed(() => {
     height: mountainDetail.value.height,
     description: mountainDetail.value.description,
     images: mountainDetail.value.image,
+    favorite: mountainDetail.value.favorite,
   };
 });
 const mapInfo = computed(() => {
@@ -67,7 +71,7 @@ const chartData = computed(() => [
 ]);
 
 const fetchMountainDetail = async (id: string) => {
-  const result = await getMountainDetail(id);
+  const result = await getMountainDetail(id, userStore.getUserId);
   if (result) {
     mountainDetail.value = result;
   }

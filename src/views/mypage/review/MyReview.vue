@@ -72,7 +72,6 @@ export default defineComponent({
     };
 
     const openFixDialog = (rev: ReviewList) => {
-      console.log(rev);
       fixDialog.value.openDialog(rev);
     };
 

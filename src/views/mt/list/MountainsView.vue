@@ -2,22 +2,22 @@
   <section class="q-ma-xl mountains">
     <SearchBox @change-city="changeCity" @search-mountain="searchMountain" />
     <MountainListView :mountain-list="mountainList" />
-    <!-- <div class="q-mt-xl">
+    <div class="q-my-xl" v-if="!!totalSize">
       <q-pagination
         v-model="current"
-        :max="5"
+        :max="maxPage"
         direction-links
-        size="18px"
         color="teal"
         class="justify-center"
+        @update:model-value="changePage"
       />
-    </div> -->
+    </div>
   </section>
 </template>
 <script setup lang="ts">
 import { getMountains } from "@/apis/mountainApis";
 import type { GetMountainListForm, MountainList } from "@/utils/typeInterface";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import SearchBox from "./partial/SearchBox.vue";
 import MountainListView from "./partial/MountainListView.vue";
@@ -35,10 +35,20 @@ const params = ref<GetMountainListForm>({
   search: "",
 });
 
+const current = ref(1);
+const totalSize = ref(0);
+
+const maxPage = computed(() => Math.ceil(totalSize.value / 12));
+
 const searchStore = useSearchStore();
 
 const changeCity = (code: string) => {
   params.value.district = code;
+  fetchMountainList();
+};
+
+const changePage = (pageNum: string) => {
+  params.value.pageNum = parseInt(pageNum) - 1;
   fetchMountainList();
 };
 
@@ -52,7 +62,8 @@ const searchMountain = (search: string) => {
 const fetchMountainList = async () => {
   const result = await getMountains(params.value);
   if (result) {
-    mountainList.value = result;
+    mountainList.value = result.mountainResp;
+    totalSize.value = result.totalPageSize;
   }
 };
 

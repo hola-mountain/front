@@ -47,7 +47,7 @@ import {
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { useUserStore } from "@/stores/user";
-import { successAlert } from "@/utils/common";
+import { successAlert, warningAlert } from "@/utils/common";
 
 const props = defineProps({
   mainInfo: {
@@ -58,6 +58,7 @@ const props = defineProps({
         height: 0,
         description: "",
         images: [],
+        favorite: 0,
       };
     },
   },
@@ -71,6 +72,8 @@ const addFavorite = async () => {
   );
   if (result) {
     successAlert("즐겨찾는 산 목록에 추가되었습니다.");
+  } else {
+    selected.value = false;
   }
 };
 const deleteFavorite = async () => {
@@ -78,16 +81,23 @@ const deleteFavorite = async () => {
     route.params.mtId as string,
     userStore.getUserId
   );
+  if (!result) {
+    selected.value = true;
+  }
 };
 
 const changeFavoriteStatus = () => {
-  if (selected.value) {
-    addFavorite();
+  if (userStore.getUserId) {
+    if (selected.value) {
+      addFavorite();
+    } else {
+      deleteFavorite();
+    }
   } else {
-    deleteFavorite();
+    warningAlert("로그인 후 이용가능합니다!");
   }
 };
 
 const slide = ref(1);
-const selected = ref(false);
+const selected = ref(!!props.mainInfo.favorite);
 </script>
