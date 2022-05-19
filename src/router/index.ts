@@ -31,14 +31,20 @@ const router = createRouter({
       component: () => import("../views/mypage/MyPage.vue"),
       children: [
         {
-          path: "/mypage/profile/:id",
+          path: "/mypage/profile",
           name: "ProfileView",
           component: () => import("../views/mypage/profile/ProfileView.vue"),
         },
         {
-          path: "/mypage/favorit/:id",
-          name: "FavoritMountain",
-          component: () => import("../views/mypage/favorit/FavoritMountain.vue"),
+          path: "/mypage/favorite",
+          name: "FavoriteMountain",
+          component: () =>
+            import("../views/mypage/favorite/FavoriteMountain.vue"),
+        },
+        {
+          path: "/mypage/review",
+          name: "MyReview",
+          component: () => import("../views/mypage/review/MyReview.vue"),
         },
       ],
     },

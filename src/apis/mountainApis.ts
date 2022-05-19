@@ -75,21 +75,28 @@ export const thumbnailFileUpload = async (
   }
 };
 export const updateMountainReview = async (
-  mountainId: string,
-  ratingId: string
-): Promise<undefined> => {
+  mountainId: number,
+  ratingId: number,
+  params: ReviewRegForm
+): Promise<ReviewList | undefined> => {
   try {
-    const result = await http.put(`/mountain/${mountainId}/review/${ratingId}`);
+    const result: ReviewList = await http.put(
+      `/mountain/${mountainId}/review/${ratingId}`,
+      params
+    );
     return result;
   } catch (e) {
     console.log(e);
   }
 };
 export const deleteMountainReview = async (
-  params: SignupForm
+  mountainId: number,
+  reviewId: number
 ): Promise<undefined> => {
   try {
-    const result = await http.post("/users/join", params);
+    const result = await http.delete(
+      `/mountain/${mountainId}/review/${reviewId}`
+    );
     return result;
   } catch (e) {
     console.log(e);
@@ -105,6 +112,32 @@ export const recommendMountainReview = async (
     console.log(e);
   }
 };
+export const addFavoriteMountain = async (
+  mountainId: string,
+  userId: number
+) => {
+  try {
+    const result = await http.post(`/mountain/${mountainId}/favorite`, {
+      userId,
+    });
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+export const removeFavoriteMountain = async (
+  mountainId: string,
+  userId: number
+) => {
+  try {
+    const result = await http.delete(`/mountain/${mountainId}/favorite`, {
+      userId,
+    });
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 export default {
   getMountains,
@@ -112,4 +145,6 @@ export default {
   registerMountainReview,
   getMountainReviews,
   thumbnailFileUpload,
+  updateMountainReview,
+  deleteMountainReview,
 };

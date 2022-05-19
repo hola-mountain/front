@@ -10,14 +10,14 @@
     >
       <q-card class="container">
         <q-card-section>
-          <div class="q-pa-md text-h6 text-bold">리뷰등록</div>
+          <div class="q-pa-md text-h6 text-bold">{{ mountainName }}</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
           <div class="q-px-md">
             <q-input
               outlined
-              v-model="registerForm.title"
+              v-model="updateForm.title"
               label="제목"
               :rules="[inputRequiredValidation]"
               ref="titleRef"
@@ -26,7 +26,7 @@
           <div class="q-pa-md">
             <span class="q-mx-md">평점</span>
             <q-rating
-              v-model="registerForm.star"
+              v-model="updateForm.star"
               size="2em"
               :max="10"
               color="star"
@@ -34,7 +34,7 @@
           </div>
           <div class="q-pa-md">
             <q-input
-              v-model="registerForm.comment"
+              v-model="updateForm.comment"
               outlined
               ref="commentRef"
               type="textarea"
@@ -113,17 +113,24 @@
         <q-card-actions align="right" class="q-px-md">
           <q-btn
             flat
-            label="등록"
+            label="수정"
             class="text-bold text-h6"
             color="primary"
             @click="submitForm"
           />
           <q-btn
             flat
-            label="취소"
+            label="삭제"
             class="text-bold text-h6"
             color="negative"
             @click="secondDialog = true"
+          />
+          <q-btn
+            flat
+            label="취소"
+            class="text-bold text-h6"
+            color="dark"
+            v-close-popup
           />
         </q-card-actions>
       </q-card>
@@ -136,7 +143,7 @@
     >
       <q-card>
         <q-card-section class="q-pa-xl text-bold">
-          취소 시 현재 작성 중인 내용은 저장되지 않습니다.
+          해당 리뷰를 삭제하시겠습니까?
         </q-card-section>
 
         <q-card-actions align="right" class="bg-white text-teal">
@@ -145,7 +152,7 @@
             label="확인"
             color="primary"
             v-close-popup
-            @click="onDialog = false"
+            @click="deleteReview"
           />
           <q-btn flat label="취소" color="negative" v-close-popup />
         </q-card-actions>
@@ -154,33 +161,29 @@
   </div>
 </template>
 <script lang="ts">
-import type { ReviewRegForm } from "@/utils/typeInterface";
-import { ref, defineComponent, onMounted } from "vue";
-import { useUserStore } from "@/stores/user";
-import { useRoute } from "vue-router";
+import type { ReviewList, ReviewRegForm } from "@/utils/typeInterface";
+import { ref, defineComponent } from "vue";
 import {
-  registerMountainReview,
+  deleteMountainReview,
   thumbnailFileUpload,
+  updateMountainReview,
 } from "@/apis/mountainApis";
-import {
-  successAlert,
-  inputRequiredValidation,
-  errorAlert,
-} from "@/utils/common";
+import { successAlert, inputRequiredValidation } from "@/utils/common";
 
 export default defineComponent({
   name: "ReviewRegDialog",
-  emits: ["success-reg"],
+  emits: ["success-work"],
   setup(props, { emit }) {
-    const route = useRoute();
-    const userStore = useUserStore();
-    const registerForm = ref<ReviewRegForm>({
+    const updateForm = ref<ReviewRegForm>({
       title: "",
       comment: "",
       userId: 0,
       star: 10,
       nickname: "",
     });
+    const mountainName = ref("");
+    const mtId = ref(0);
+    const reviewId = ref(0);
     const thumbImg = ref<File | null>(null);
 
     const commentRef = ref();
@@ -188,9 +191,19 @@ export default defineComponent({
 
     const onDialog = ref(false);
     const secondDialog = ref(false);
-    const openDialog = () => {
+
+    const openDialog = (info: ReviewList) => {
+      updateForm.value.comment = info.comment;
+      updateForm.value.title = info.title;
+      updateForm.value.userId = info.userId;
+      updateForm.value.star = info.star;
+      updateForm.value.nickname = info.nickname;
+      mountainName.value = info.name;
+      mtId.value = info.mountainId;
+      reviewId.value = info.ratingId;
       onDialog.value = true;
     };
+
     const uploadImg = (info: File[]) => {
       thumbImg.value = info[0];
     };
@@ -198,9 +211,9 @@ export default defineComponent({
       thumbImg.value = null;
     };
     const reset = () => {
-      registerForm.value.title = "";
-      registerForm.value.comment = "";
-      registerForm.value.star = 10;
+      updateForm.value.title = "";
+      updateForm.value.comment = "";
+      updateForm.value.star = 10;
       thumbImg.value = null;
     };
 
@@ -209,20 +222,21 @@ export default defineComponent({
       titleRef.value.validate();
 
       if (!commentRef.value.hasError && !titleRef.value.hasError) {
-        registerReview();
+        updateReview();
       }
     };
 
-    const registerReview = async () => {
-      const result = await registerMountainReview(
-        route.params.mtId as string,
-        registerForm.value
+    const updateReview = async () => {
+      const result = await updateMountainReview(
+        mtId.value,
+        reviewId.value,
+        updateForm.value
       );
       if (result) {
         if (thumbImg.value) {
           imgUpload(result.id);
         } else {
-          successWork();
+          successWork("리뷰가 수정되었습니다!");
         }
       }
     };
@@ -230,34 +244,38 @@ export default defineComponent({
     const imgUpload = async (id: number) => {
       const result = await thumbnailFileUpload(id, thumbImg.value as File);
       if (result) {
-        successWork();
+        successWork("리뷰가 수정되었습니다!");
       }
     };
 
-    const successWork = () => {
-      successAlert("리뷰가 등록되었습니다!");
-      emit("success-reg");
+    const successWork = (msg: string) => {
+      successAlert(msg);
+      emit("success-work");
       onDialog.value = false;
     };
 
-    onMounted(() => {
-      registerForm.value.nickname = userStore.getNickName;
-      registerForm.value.userId = userStore.getUserId;
-    });
+    const deleteReview = async () => {
+      const result = await deleteMountainReview(mtId.value, reviewId.value);
+      if (result) {
+        successWork("리뷰가 삭제되었습니다.");
+      }
+    };
 
     return {
       onDialog,
       openDialog,
-      registerForm,
+      updateForm,
       uploadImg,
       removeImg,
       reset,
-      registerReview,
+      updateReview,
       inputRequiredValidation,
       commentRef,
       titleRef,
       submitForm,
       secondDialog,
+      mountainName,
+      deleteReview,
     };
   },
 });

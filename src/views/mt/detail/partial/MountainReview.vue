@@ -46,9 +46,8 @@
         </template>
       </q-infinite-scroll>
     </div>
-    <div class="row justify-center q-pb-xl">
-      <div v-for="(rev, idx) in reviewList" :key="idx"></div>
-      <div class="q-mb-xl q-pb-xl" v-if="!reviewList.length">
+    <div class="row justify-center q-pb-xl" v-if="!reviewList.length">
+      <div class="q-mb-xl q-pb-xl">
         <h5 class="text-bold text-center">
           현재 등록된 리뷰가 없습니다.<br /><br />첫 번째 리뷰어가 되어보세요!
         </h5>

@@ -32,6 +32,20 @@
   </section>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useUserStore } from "@/stores/user";
+import { getFavoriteMountainList } from "@/apis/userApis";
+const userStore = useUserStore();
 const current = ref(3);
+
+const getList = async () => {
+  const result = await getFavoriteMountainList(userStore.getUserId);
+  if (result) {
+    //
+  }
+};
+
+onMounted(() => {
+  getList();
+});
 </script>

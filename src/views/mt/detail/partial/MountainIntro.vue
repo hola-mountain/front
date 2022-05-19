@@ -27,6 +27,7 @@
           checked-icon="favorite"
           unchecked-icon="favorite_border"
           color="red"
+          @update:model-value="changeFavoriteStatus"
         />
       </h6>
       <h5 class="text-bold q-mb-sm">산 높이</h5>
@@ -39,7 +40,15 @@
   </div>
 </template>
 <script setup lang="ts">
+import {
+  addFavoriteMountain,
+  removeFavoriteMountain,
+} from "@/apis/mountainApis";
 import { ref } from "vue";
+import { useRoute } from "vue-router";
+import { useUserStore } from "@/stores/user";
+import { successAlert } from "@/utils/common";
+
 const props = defineProps({
   mainInfo: {
     type: Object,
@@ -53,6 +62,31 @@ const props = defineProps({
     },
   },
 });
+const route = useRoute();
+const userStore = useUserStore();
+const addFavorite = async () => {
+  const result = await addFavoriteMountain(
+    route.params.mtId as string,
+    userStore.getUserId
+  );
+  if (result) {
+    successAlert("즐겨찾는 산 목록에 추가되었습니다.");
+  }
+};
+const deleteFavorite = async () => {
+  const result = await removeFavoriteMountain(
+    route.params.mtId as string,
+    userStore.getUserId
+  );
+};
+
+const changeFavoriteStatus = () => {
+  if (selected.value) {
+    addFavorite();
+  } else {
+    deleteFavorite();
+  }
+};
 
 const slide = ref(1);
 const selected = ref(false);

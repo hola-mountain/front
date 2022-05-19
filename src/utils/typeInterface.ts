@@ -56,11 +56,12 @@ export interface ReviewList {
   id: number;
   mountainId: number;
   nickname: string;
-  ratingNum: number;
+  ratingId: number;
   star: number;
   thumbImg: string | null;
   title: string;
   userId: number;
+  name: string;
 }
 
 export interface PageInfo {

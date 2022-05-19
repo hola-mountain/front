@@ -28,7 +28,7 @@
           <q-item
             clickable
             v-close-popup
-            @click="$router.push(`/mypage/profile/${userName}`)"
+            @click="$router.push(`/mypage/profile`)"
           >
             <q-item-section>
               <q-item-label class="text-bold">마이페이지</q-item-label>

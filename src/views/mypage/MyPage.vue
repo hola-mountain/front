@@ -9,7 +9,7 @@
         toggle-color="teal"
         :options="[
           { value: 'profile', slot: 'one' },
-          { value: 'favorit', slot: 'two' },
+          { value: 'favorite', slot: 'two' },
           { value: 'review', slot: 'three' },
         ]"
         @update:model-value="movePage"
@@ -48,7 +48,7 @@ const model = ref("profile");
 const route = useRoute();
 const router = useRouter();
 const movePage = (page: string) => {
-  router.push(`/mypage/${page}/1`);
+  router.push(`/mypage/${page}`);
 };
 
 onMounted(() => {
