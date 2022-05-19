@@ -5,15 +5,19 @@
       <table class="q-mx-auto">
         <tr>
           <td class="q-pa-md text-bold"><p>이메일</p></td>
-          <td class="q-pa-md text-weight-medium"><p>woals214@gmail.com</p></td>
+          <td class="q-pa-md text-weight-medium">
+            <p>{{ myInfo.email }}</p>
+          </td>
         </tr>
         <tr>
           <td class="q-pa-md text-bold"><p>닉네임</p></td>
-          <td class="q-pa-md text-weight-medium"><p>내 이름은 등산왕</p></td>
+          <td class="q-pa-md text-weight-medium">
+            <p>{{ myInfo.nickName }}</p>
+          </td>
         </tr>
         <tr>
           <td class="q-pa-md text-bold"><p>비밀번호</p></td>
-          <td class="q-pa-md text-weight-medium"><p>********</p></td>
+          <td class="q-pa-md text-weight-medium"><p>**********</p></td>
         </tr>
       </table>
     </div>
@@ -36,10 +40,15 @@ import { useUserStore } from "@/stores/user";
 import { getMyProfile, getMyBadges } from "@/apis/userApis";
 
 const userStore = useUserStore();
+
+const myInfo = ref({
+  email: "",
+  nickName: "",
+});
 const getProfile = async () => {
   const result = await getMyProfile(userStore.getUserId);
   if (result) {
-    console.log(result);
+    myInfo.value = result;
   }
 };
 const getBadges = async () => {

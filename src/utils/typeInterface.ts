@@ -67,3 +67,8 @@ export interface PageInfo {
   pageNum: number;
   pageSize: number;
 }
+
+export interface MyInfo {
+  email: string;
+  nickName: string;
+}

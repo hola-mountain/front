@@ -1,4 +1,5 @@
 import type {
+  MyInfo,
   SigninForm,
   SigninResponce,
   SignupForm,
@@ -23,17 +24,19 @@ export const signup = async (
     console.log(e);
   }
 };
-export const getMyProfile = async (userId: number): Promise<any> => {
+export const getMyProfile = async (
+  userId: number
+): Promise<MyInfo | undefined> => {
   try {
-    const result = await http.get(`/mypage/myInfo`, { userId });
-    console.log(result);
+    const result: MyInfo = await http.get(`/mypage/myInfo/${userId}`);
+    return result;
   } catch (e) {
     console.log(e);
   }
 };
 export const getMyBadges = async (userId: number): Promise<any> => {
   try {
-    const result = await http.get(`/mypage/badges`, { userId });
+    const result = await http.get(`/mypage/badges/${userId}`);
     console.log(result);
   } catch (e) {
     console.log(e);
