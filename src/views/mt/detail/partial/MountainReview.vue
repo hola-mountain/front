@@ -6,54 +6,108 @@
         <h6 class="text-overline" @click="openRegDialog">리뷰등록</h6>
       </q-btn>
     </div>
-    <div class="row justify-center q-pb-xl">
-      <div v-for="item in 20" :key="item" style="width: 300px">
-        <q-card class="my-card q-ma-md" @click="basic = true">
-          <img src="https://cdn.quasar.dev/img/mountains.jpg" />
+    <p class="text-subtitle2 text-center">
+      수정, 삭제는 마이페이지에서 이용가능합니다.
+    </p>
+    <div class="q-pa-md" style="width: 90%; margin: 0 auto">
+      <q-infinite-scroll @load="onLoad" :offset="300">
+        <div class="row justify-start">
+          <div
+            v-for="(rev, idx) in reviewList"
+            :key="idx"
+            style="min-width: 150px"
+          >
+            <q-card class="my-card q-ma-sm">
+              <img
+                v-if="rev.thumbImg"
+                :src="rev.thumbImg"
+                style="width: 200px"
+              />
 
-          <q-card-section>
-            <div class="text-h6">Our Changing Planet</div>
-            <div class="text-subtitle2">by John Doe</div>
-          </q-card-section>
-          <q-card-actions>
-            <q-rating v-model="stars" :max="5" size="30px" />
-          </q-card-actions>
-          <q-card-section class="q-pt-none"> safasfsafsaf </q-card-section>
-        </q-card>
+              <q-card-section>
+                <div class="text-h6">{{ rev.title }}</div>
+                <div class="text-subtitle2">{{ rev.nickname }}</div>
+                <div>
+                  <q-icon
+                    name="star"
+                    color="yellow"
+                    v-for="item in rev.star"
+                    :key="item"
+                  />
+                </div>
+              </q-card-section>
+              <q-card-section class="q-pt-none">
+                {{ rev.comment }}
+              </q-card-section>
+            </q-card>
+          </div>
+        </div>
+        <template v-slot:loading>
+          <div class="row justify-center q-my-md">
+            <q-spinner-dots color="primary" size="40px" />
+          </div>
+        </template>
+      </q-infinite-scroll>
+    </div>
+    <div class="row justify-center q-pb-xl" v-if="!reviewList.length">
+      <div class="q-mb-xl q-pb-xl">
+        <h5 class="text-bold text-center">
+          현재 등록된 리뷰가 없습니다.<br /><br />첫 번째 리뷰어가 되어보세요!
+        </h5>
+        <br /><br />
+        <img src="@/assets/images/empty_review.png" alt="" />
       </div>
     </div>
-    <ReviewRegDialog ref="regRef" />
-    <ReviewDetailDialog ref="detailRef" />
+    <ReviewRegDialog ref="regRef" @success-reg="$emit('success-reg')" />
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, type PropType } from "vue";
 import ReviewRegDialog from "./ReviewRegDialog.vue";
-import ReviewDetailDialog from "./ReviewDetailDialog.vue";
+import { useUserStore } from "@/stores/user";
+import { warningAlert } from "@/utils/common";
+import type { ReviewList } from "@/utils/typeInterface";
 
 export default defineComponent({
   name: "MountainReview",
-  components: { ReviewRegDialog, ReviewDetailDialog },
-  setup() {
-    const basic = ref(false);
+  components: { ReviewRegDialog },
+  props: {
+    reviewList: {
+      type: Array as PropType<ReviewList[]>,
+      default: () => [],
+    },
+    isMoreInfo: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: ["success-reg", "more-info"],
+  setup(props, { emit }) {
     const stars = ref(4);
     const regRef = ref();
-    const detailRef = ref();
+    const userStore = useUserStore();
 
     const openRegDialog = () => {
-      regRef.value.openDialog();
+      if (userStore.getUserId) {
+        regRef.value.openDialog();
+      } else {
+        warningAlert("로그인 후 이용가능합니다!");
+      }
     };
-    const openDetailDialog = () => {
-      detailRef.value.openDialog();
+
+    const onLoad = (index: number, done: any) => {
+      if (props.isMoreInfo) {
+        emit("more-info", done);
+      } else {
+        done();
+      }
     };
 
     return {
-      basic,
       stars,
       regRef,
-      detailRef,
       openRegDialog,
-      openDetailDialog,
+      onLoad,
     };
   },
 });

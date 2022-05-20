@@ -4,10 +4,10 @@
       src="@/assets/images/logo.png"
       alt=""
       class="logo"
-      @click="$router.push('/')"
+      @click="movePage('/')"
     />
     <div>
-      <q-btn glossy class="q-mx-md" @click="$router.push('/mountains/00')">
+      <q-btn glossy class="q-mx-md" @click="movePage('/mountains/0')">
         <q-icon left size="35px" name="landscape" />
         <div class="text-bold">전국 산 정보</div>
       </q-btn>
@@ -25,11 +25,7 @@
           </div>
         </template>
         <q-list>
-          <q-item
-            clickable
-            v-close-popup
-            @click="$router.push(`/mypage/profile/${userName}`)"
-          >
+          <q-item clickable v-close-popup @click="movePage(`/mypage/profile`)">
             <q-item-section>
               <q-item-label class="text-bold">마이페이지</q-item-label>
             </q-item-section>
@@ -53,6 +49,7 @@ import { computed, defineComponent, ref } from "vue";
 import { useUserStore } from "@/stores/user";
 import { successAlert } from "@/utils/common";
 import { useRoute, useRouter } from "vue-router";
+import { useSearchStore } from "@/stores/search";
 
 export default defineComponent({
   name: "AppHeader",
@@ -60,6 +57,7 @@ export default defineComponent({
     LoginDialog,
   },
   setup() {
+    const searchStore = useSearchStore();
     const loginDialog = ref();
     const userStore = useUserStore();
     const userName = computed(() => userStore.getNickName);
@@ -70,8 +68,14 @@ export default defineComponent({
       loginDialog.value.openDialog();
     };
 
+    const movePage = (page: string) => {
+      searchStore.resetAll();
+      router.push(page);
+    };
+
     const logout = () => {
       userStore.logOutUser();
+      searchStore.resetAll();
       successAlert(`정상적으로 로그아웃되었습니다.`);
       if (route.fullPath.includes("mypage")) {
         router.push("/");
@@ -83,6 +87,7 @@ export default defineComponent({
       openLoginDialog,
       userName,
       logout,
+      movePage,
     };
   },
 });

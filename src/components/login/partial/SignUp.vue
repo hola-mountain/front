@@ -26,7 +26,7 @@
         <q-input
           outlined
           v-model="registerForm.nickName"
-          label="별명"
+          label="아이디"
           color="green-10"
           ref="nickNameRef"
           :rules="[inputRequiredValidation]"

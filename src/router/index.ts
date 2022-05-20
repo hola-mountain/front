@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import MainView from "../views/main/MainView.vue";
+import guard from "./guard";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,16 +30,23 @@ const router = createRouter({
     {
       path: "/mypage",
       component: () => import("../views/mypage/MyPage.vue"),
+      beforeEnter: guard,
       children: [
         {
-          path: "/mypage/profile/:id",
+          path: "/mypage/profile",
           name: "ProfileView",
           component: () => import("../views/mypage/profile/ProfileView.vue"),
         },
         {
-          path: "/mypage/favorit/:id",
-          name: "FavoritMountain",
-          component: () => import("../views/mypage/favorit/FavoritMountain.vue"),
+          path: "/mypage/favorite",
+          name: "FavoriteMountain",
+          component: () =>
+            import("../views/mypage/favorite/FavoriteMountain.vue"),
+        },
+        {
+          path: "/mypage/review",
+          name: "MyReview",
+          component: () => import("../views/mypage/review/MyReview.vue"),
         },
       ],
     },

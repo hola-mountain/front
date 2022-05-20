@@ -29,24 +29,35 @@
           },
         }"
       >
-        <swiper-slide v-for="item in 10" :key="item">
+        <swiper-slide v-for="(item, idx) in mainReview" :key="idx">
           <q-card class="my-card">
-            <img src="https://cdn.quasar.dev/img/mountains.jpg" />
+            <img
+              :src="getImgUrl(item.image)"
+              style="height: 200px; object-fit: cover"
+            />
 
             <q-card-section>
-              <div class="text-h6">Our Changing Planet</div>
-              <div class="text-subtitle2">by John Doe</div>
+              <div class="text-h6">{{ item.name }}</div>
+              <div class="text-h6">{{ item.title }}</div>
+              <div class="text-subtitle2">{{ item.id }}</div>
+              <div>
+                <q-icon
+                  name="star"
+                  color="yellow"
+                  v-for="star in item.star"
+                  :key="star"
+                />
+              </div>
             </q-card-section>
-            <q-card-actions>
-              <q-rating v-model="stars" :max="5" size="30px" />
-            </q-card-actions>
-            <q-card-section class="q-pt-none"> safasfsafsaf </q-card-section>
+            <q-card-section class="q-pt-none">
+              {{ item.description }}
+            </q-card-section>
           </q-card>
         </swiper-slide>
       </swiper>
     </div>
     <div class="text-center q-ma-xl">
-      <q-btn push color="brown-6" @click="$router.push('/mountains/00')">
+      <q-btn push color="brown-6" @click="movePage('/mountains/0')">
         <q-icon left size="3em" name="landscape" />
         <div class="text-bold">전국 산 정보 보러가기</div>
       </q-btn>
@@ -59,8 +70,20 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
+import { mainReview } from "@/utils/sample_review";
+import { useRouter } from "vue-router";
+import { useSearchStore } from "@/stores/search";
 
-const stars = ref(4);
+const router = useRouter();
+const searchStore = useSearchStore();
 const modules = [Navigation];
+const getImgUrl = (img: string) => {
+  const imgUrl = new URL(`../../../assets/images/main/${img}`, import.meta.url);
+  return imgUrl;
+};
+const movePage = (page: string) => {
+  searchStore.resetAll();
+  router.push(page);
+};
 </script>
 <style lang="sass" scoped></style>

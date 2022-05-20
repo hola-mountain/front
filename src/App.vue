@@ -8,6 +8,7 @@
       color="brown-6"
       icon="keyboard_arrow_up"
       class="top-btn"
+      style="z-index: 999"
       v-if="showScroll"
       @click="scrollUp"
     />
@@ -34,7 +35,6 @@ const topBtnScrollEvt = () => {
   if (!timer.value) {
     timer.value = setTimeout(function () {
       timer.value = null;
-      console.log(window.scrollY);
       if (window.scrollY > 300) {
         showScroll.value = true;
       } else {

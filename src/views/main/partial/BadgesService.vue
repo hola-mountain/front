@@ -5,7 +5,7 @@
         <div class="q-pa-md text-center content">
           <img src="@/assets/images/badges.png" alt="" />
         </div>
-        <div class="text-blue-grey-9 q-px-xl">
+        <div class="text-blue-grey-9 q-px-xl q-my-xl">
           <h4 class="q-py-md text-bold">
             등산 후 커뮤니티 활동을 통해 뱃지를 수집해보세요.
           </h4>

@@ -13,6 +13,7 @@ export const useUserStore = defineStore({
     setUser(info: SigninResponce) {
       this.$state.accessToken = info.accessToken;
       this.$state.refreshToken = info.refreshToken;
+      this.$state.userId = info.userId;
     },
     setUserNickName(name: string) {
       this.$state.userNickName = name;

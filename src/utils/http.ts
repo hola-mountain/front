@@ -1,19 +1,15 @@
 import Axios from "axios";
+import { useUserStore } from "@/stores/user";
 import { errorAlert } from "./common";
-import {
-  Loading,
-  // optional!, for example below
-  // with custom spinner
-  QSpinnerGears,
-} from "quasar";
+import { Loading } from "quasar";
 const instance = Axios.create();
 
 instance.interceptors.request.use(
-  function (config) {
+  function (config: any) {
+    config.headers.Authorization = `Bearer ${useUserStore().getAccessToken}`;
     Loading.show({
       customClass: "loading",
       spinnerSize: 0,
-      // other props
     });
     return config;
   },
@@ -31,8 +27,6 @@ instance.interceptors.response.use(
   function (error) {
     Loading.hide();
     const basicMsg = "오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
-    console.log(error.status);
-    console.log(error.response?.status);
     if (error.response?.status === 400) {
       const errorMsg = error.response?.data?.errorMessage || basicMsg;
       errorAlert(errorMsg);
@@ -43,7 +37,7 @@ instance.interceptors.response.use(
   }
 );
 
-const baseUrl = "http://15.165.192.190:8080";
+const baseUrl = "http://54.180.124.185:8080";
 // const baseUrl = import.meta.env.VITE_BASE_API_URL;
 const defaultHeaders = {
   "Content-Type": "application/json;charset=UTF-8",
@@ -75,6 +69,30 @@ const httpInstance = {
       ...additionalConfig,
     };
     const promise = instance.post(url, params, config);
+    return promise.then(({ data }) => data);
+  },
+  put(uri: string, params = {}, headers = {}, additionalConfig = {}) {
+    const url = `${baseUrl}${uri}`;
+    const config = {
+      headers: {
+        ...defaultHeaders,
+        ...headers,
+      },
+      ...additionalConfig,
+    };
+    const promise = instance.put(url, params, config);
+    return promise.then(({ data }) => data);
+  },
+  patch(uri: string, params = {}, headers = {}, additionalConfig = {}) {
+    const url = `${baseUrl}${uri}`;
+    const config = {
+      headers: {
+        ...defaultHeaders,
+        ...headers,
+      },
+      ...additionalConfig,
+    };
+    const promise = instance.patch(url, params, config);
     return promise.then(({ data }) => data);
   },
   delete(uri: string, params = {}, headers = {}, additionalConfig = {}) {

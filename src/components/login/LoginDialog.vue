@@ -3,7 +3,7 @@
     v-model="isOpen"
     transition-show="rotate"
     transition-hide="rotate"
-    class="login-dialog"
+    class="dialog"
     @hide="reset"
   >
     <div class="container" v-if="isOpen">

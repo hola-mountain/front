@@ -17,7 +17,7 @@
         <q-input
           outlined
           v-model="loginForm.nickName"
-          label="닉네임"
+          label="아이디"
           class="q-mb-md"
           color="green-10"
         />
@@ -32,7 +32,7 @@
         />
         <q-checkbox
           v-model="saveInfo"
-          label="로그인 상태 유지"
+          label="로그인 아이디 저장"
           class="q-mb-md"
           color="green-8"
         />
@@ -54,14 +54,15 @@
   </q-card>
 </template>
 <script lang="ts">
-import { ref, defineComponent } from "vue";
+import { ref, defineComponent, onMounted } from "vue";
 import { signin } from "@/apis/userApis";
 import { useUserStore } from "@/stores/user";
 import { successAlert } from "@/utils/common";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "SignIn",
-  emits: ["success-signin"],
+  emits: ["success-signin", "view-singup"],
   setup(props, { emit }) {
     const loginForm = ref({
       nickName: "",
@@ -69,10 +70,17 @@ export default defineComponent({
     });
     const saveInfo = ref(false);
 
+    const $q = useQuasar();
+
     const userStore = useUserStore();
     const doSignin = async () => {
       const result = await signin(loginForm.value);
       if (result) {
+        if (saveInfo.value) {
+          $q.cookies.set("login_id", loginForm.value.nickName);
+        } else {
+          $q.cookies.remove("login_id");
+        }
         userStore.setUser(result);
         userStore.setUserNickName(loginForm.value.nickName);
         successAlert(`환영합니다. ${loginForm.value.nickName}님!`);
@@ -83,6 +91,14 @@ export default defineComponent({
     const setJoinId = (nickName: string) => {
       loginForm.value.nickName = nickName;
     };
+
+    onMounted(() => {
+      const savedId = $q.cookies.get("login_id");
+      if (savedId) {
+        loginForm.value.nickName = savedId;
+        saveInfo.value = true;
+      }
+    });
     return {
       loginForm,
       saveInfo,
