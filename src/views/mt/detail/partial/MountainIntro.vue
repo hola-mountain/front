@@ -83,7 +83,7 @@ const deleteFavorite = async () => {
     userStore.getUserId
   );
   if (!result) {
-    selected.value = true;
+    checkIsFavorite();
   }
 };
 const checkIsFavorite = async () => {
@@ -92,7 +92,7 @@ const checkIsFavorite = async () => {
     userStore.getUserId
   );
   if (result) {
-    console.log(result);
+    selected.value = !!result.favorite;
   }
 };
 

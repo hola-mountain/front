@@ -29,23 +29,29 @@
           },
         }"
       >
-        <swiper-slide v-for="item in 10" :key="item">
+        <swiper-slide v-for="(item, idx) in mainReview" :key="idx">
           <q-card class="my-card">
-            <img src="https://cdn.quasar.dev/img/mountains.jpg" />
+            <img
+              :src="getImgUrl(item.image)"
+              style="height: 200px; object-fit: cover"
+            />
 
             <q-card-section>
-              <div class="text-h6">Our Changing Planet</div>
-              <div class="text-subtitle2">by John Doe</div>
+              <div class="text-h6">{{ item.name }}</div>
+              <div class="text-h6">{{ item.title }}</div>
+              <div class="text-subtitle2">{{ item.id }}</div>
               <div>
                 <q-icon
                   name="star"
                   color="yellow"
-                  v-for="star in 5"
+                  v-for="star in item.star"
                   :key="star"
                 />
               </div>
             </q-card-section>
-            <q-card-section class="q-pt-none"> safasfsafsaf </q-card-section>
+            <q-card-section class="q-pt-none">
+              {{ item.description }}
+            </q-card-section>
           </q-card>
         </swiper-slide>
       </swiper>
@@ -64,8 +70,12 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
+import { mainReview } from "@/utils/sample_review";
 
-const stars = ref(4);
 const modules = [Navigation];
+const getImgUrl = (img: string) => {
+  const imgUrl = new URL(`../../../assets/images/main/${img}`, import.meta.url);
+  return imgUrl;
+};
 </script>
 <style lang="sass" scoped></style>

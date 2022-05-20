@@ -255,8 +255,12 @@ export default defineComponent({
     };
 
     const deleteReview = async () => {
-      const result = await deleteMountainReview(mtId.value, reviewId.value);
-      if (result) {
+      const result = await deleteMountainReview(
+        mtId.value,
+        reviewId.value,
+        updateForm.value.userId
+      );
+      if (!result) {
         successWork("리뷰가 삭제되었습니다.");
       }
     };

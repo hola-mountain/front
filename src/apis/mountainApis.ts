@@ -94,11 +94,12 @@ export const updateMountainReview = async (
 };
 export const deleteMountainReview = async (
   mountainId: number,
-  reviewId: number
+  reviewId: number,
+  userId: number
 ): Promise<undefined> => {
   try {
     const result = await http.delete(
-      `/mountain/${mountainId}/review/${reviewId}`
+      `/mountain/${mountainId}/review/${reviewId}?userId=${userId}`
     );
     return result;
   } catch (e) {
@@ -146,9 +147,9 @@ export const removeFavoriteMountain = async (
   userId: number
 ) => {
   try {
-    const result = await http.delete(`/mountain/${mountainId}/favorite`, {
-      userId,
-    });
+    const result = await http.delete(
+      `/mountain/${mountainId}/favorite/${userId}`
+    );
     return result;
   } catch (e) {
     console.log(e);
