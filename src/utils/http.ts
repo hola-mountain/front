@@ -1,14 +1,15 @@
 import Axios from "axios";
+import { useUserStore } from "@/stores/user";
 import { errorAlert } from "./common";
 import { Loading } from "quasar";
 const instance = Axios.create();
 
 instance.interceptors.request.use(
-  function (config) {
+  function (config: any) {
+    config.headers.Authorization = `Bearer ${useUserStore().getAccessToken}`;
     Loading.show({
       customClass: "loading",
       spinnerSize: 0,
-      // other props
     });
     return config;
   },

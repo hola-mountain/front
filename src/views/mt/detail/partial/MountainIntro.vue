@@ -42,9 +42,10 @@
 <script setup lang="ts">
 import {
   addFavoriteMountain,
+  getIsFavoriteMountain,
   removeFavoriteMountain,
 } from "@/apis/mountainApis";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import { successAlert, warningAlert } from "@/utils/common";
@@ -85,6 +86,15 @@ const deleteFavorite = async () => {
     selected.value = true;
   }
 };
+const checkIsFavorite = async () => {
+  const result = await getIsFavoriteMountain(
+    route.params.mtId as string,
+    userStore.getUserId
+  );
+  if (result) {
+    console.log(result);
+  }
+};
 
 const changeFavoriteStatus = () => {
   if (userStore.getUserId) {
@@ -95,9 +105,14 @@ const changeFavoriteStatus = () => {
     }
   } else {
     warningAlert("로그인 후 이용가능합니다!");
+    selected.value = !selected.value;
   }
 };
 
 const slide = ref(1);
 const selected = ref(!!props.mainInfo.favorite);
+
+onMounted(() => {
+  // checkIsFavorite();
+});
 </script>

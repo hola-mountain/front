@@ -34,7 +34,6 @@ const topBtnScrollEvt = () => {
   if (!timer.value) {
     timer.value = setTimeout(function () {
       timer.value = null;
-      console.log(window.scrollY);
       if (window.scrollY > 300) {
         showScroll.value = true;
       } else {

@@ -115,6 +115,19 @@ export const recommendMountainReview = async (
     console.log(e);
   }
 };
+export const getIsFavoriteMountain = async (
+  mountainId: string,
+  userId: number
+) => {
+  try {
+    const result = await http.get(`/mountain/${mountainId}/favorite`, {
+      userId,
+    });
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
 export const addFavoriteMountain = async (
   mountainId: string,
   userId: number
