@@ -17,6 +17,25 @@
         </q-card>
       </div>
     </div>
+    <div
+      class="row justify-center text-center q-pa-xl"
+      v-if="!favoriteList.length"
+    >
+      <div class="q-mb-xl q-pb-xl">
+        <h5 class="text-bold">
+          즐겨찾기 설정한 산이 없습니다.<br /><br />자주가는 산을 즐겨찾기
+          설정해보세요!
+        </h5>
+        <br /><br />
+        <img src="@/assets/images/empty_favorite.png" alt="" />
+        <div class="text-center q-ma-xl">
+          <q-btn push color="brown-6" @click="$router.push('/mountains/0')">
+            <q-icon left size="3em" name="landscape" />
+            <div class="text-bold">전국 산 정보 보러가기</div>
+          </q-btn>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 <script setup lang="ts">

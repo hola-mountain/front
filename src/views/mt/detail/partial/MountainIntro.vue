@@ -113,6 +113,8 @@ const slide = ref(1);
 const selected = ref(!!props.mainInfo.favorite);
 
 onMounted(() => {
-  // checkIsFavorite();
+  if (userStore.getUserId) {
+    checkIsFavorite();
+  }
 });
 </script>

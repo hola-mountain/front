@@ -25,7 +25,7 @@
       <h4 class="q-pb-lg text-bold">흭득 뱃지</h4>
       <div class="row justify-center">
         <div class="q-ma-md" v-for="item in badges" :key="item.achievementId">
-          <img src="@/assets/images/hiker.jpg" alt="" style="width: 150px" />
+          <img :src="getImgUrl(item.badgeType)" alt="" style="width: 150px" />
         </div>
       </div>
       <div v-if="!badges.length">
@@ -65,6 +65,10 @@ const getBadges = async () => {
   if (result) {
     badges.value = result;
   }
+};
+const getImgUrl = (type: string) => {
+  const imgUrl = new URL(`../../../assets/images/${type}.png`, import.meta.url);
+  return imgUrl;
 };
 onMounted(() => {
   getProfile();
