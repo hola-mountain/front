@@ -169,6 +169,7 @@ import {
   updateMountainReview,
 } from "@/apis/mountainApis";
 import { successAlert, inputRequiredValidation } from "@/utils/common";
+import { useUserStore } from "@/stores/user";
 
 export default defineComponent({
   name: "ReviewRegDialog",
@@ -181,6 +182,7 @@ export default defineComponent({
       star: 10,
       nickname: "",
     });
+    const userStore = useUserStore();
     const mountainName = ref("");
     const mtId = ref(0);
     const reviewId = ref(0);
@@ -255,13 +257,15 @@ export default defineComponent({
     };
 
     const deleteReview = async () => {
-      const result = await deleteMountainReview(
-        mtId.value,
-        reviewId.value,
-        updateForm.value.userId
-      );
-      if (!result) {
+      try {
+        await deleteMountainReview(
+          mtId.value,
+          reviewId.value,
+          userStore.getUserId
+        );
         successWork("리뷰가 삭제되었습니다.");
+      } catch (e) {
+        console.log(e);
       }
     };
 

@@ -103,7 +103,7 @@ export const deleteMountainReview = async (
     );
     return result;
   } catch (e) {
-    console.log(e);
+    throw Error("error");
   }
 };
 export const recommendMountainReview = async (

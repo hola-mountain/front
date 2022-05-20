@@ -57,7 +57,7 @@
       </swiper>
     </div>
     <div class="text-center q-ma-xl">
-      <q-btn push color="brown-6" @click="$router.push('/mountains/0')">
+      <q-btn push color="brown-6" @click="movePage('/mountains/0')">
         <q-icon left size="3em" name="landscape" />
         <div class="text-bold">전국 산 정보 보러가기</div>
       </q-btn>
@@ -71,11 +71,19 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
 import { mainReview } from "@/utils/sample_review";
+import { useRouter } from "vue-router";
+import { useSearchStore } from "@/stores/search";
 
+const router = useRouter();
+const searchStore = useSearchStore();
 const modules = [Navigation];
 const getImgUrl = (img: string) => {
   const imgUrl = new URL(`../../../assets/images/main/${img}`, import.meta.url);
   return imgUrl;
+};
+const movePage = (page: string) => {
+  searchStore.resetAll();
+  router.push(page);
 };
 </script>
 <style lang="sass" scoped></style>

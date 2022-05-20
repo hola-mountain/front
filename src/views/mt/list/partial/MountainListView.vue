@@ -7,7 +7,7 @@
     >
       <q-card
         class="my-card cursor-pointer"
-        @click="$router.push(`/mountains/detail/${item.mountainId}`)"
+        @click="$emit('move-detail', item.mountainId)"
       >
         <q-img :src="item.image[0]">
           <div class="absolute-bottom text-h6">{{ item.name }}</div>
@@ -37,6 +37,7 @@ const props = defineProps({
     default: () => [],
   },
 });
+const emits = defineEmits(["move-detail"]);
 </script>
 <style scoped>
 .q-img.q-img--menu {

@@ -1,7 +1,7 @@
 <template>
   <section class="q-ma-xl mountains">
     <SearchBox @change-city="changeCity" @search-mountain="searchMountain" />
-    <MountainListView :mountain-list="mountainList" />
+    <MountainListView :mountain-list="mountainList" @move-detail="moveDetail" />
     <div class="q-my-xl" v-if="!!totalSize">
       <q-pagination
         v-model="current"
@@ -22,6 +22,7 @@ import { useRoute } from "vue-router";
 import SearchBox from "./partial/SearchBox.vue";
 import MountainListView from "./partial/MountainListView.vue";
 import { useSearchStore } from "@/stores/search";
+import router from "@/router";
 
 const route = useRoute();
 const mountainList = ref<MountainList[]>([]);
@@ -67,10 +68,15 @@ const fetchMountainList = async () => {
   }
 };
 
+const moveDetail = (mtId: number) => {
+  searchStore.setMtPageNum(params.value.pageNum);
+  router.push(`/mountains/detail/${mtId}`);
+};
+
 onMounted(() => {
-  if (searchStore.getSearchText) {
-    params.value.search = searchStore.getSearchText;
-  }
+  params.value.search = searchStore.getSearchText;
+  params.value.pageNum = searchStore.getMtPageNum;
+  current.value = searchStore.getMtPageNum + 1;
   fetchMountainList();
 });
 </script>
