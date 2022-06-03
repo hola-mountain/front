@@ -79,7 +79,7 @@
 <script setup lang="ts">
 import type { SignupForm } from "@/utils/typeInterface";
 import { ref } from "vue";
-import { inputRequiredValidation, successAlert } from "@/utils/common";
+import { inputRequiredValidation, warningAlert } from "@/utils/common";
 import { signup } from "@/apis/userApis";
 
 const emits = defineEmits(["success-signup", "view-singin"]);
@@ -100,7 +100,7 @@ const passwordCheck = ref("");
 const registerUser = async () => {
   const result = await signup(registerForm.value);
   if (result) {
-    successAlert("회원가입이 완료되었습니다.");
+    warningAlert("이메일 인증 후 로그인이 가능합니다. 이메일 인증을 해주세요!");
     emits("success-signup", registerForm.value.email);
   }
 };
